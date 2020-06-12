@@ -43,7 +43,8 @@ export default {
       mapbox: null,
       lastSelected: -1,
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
-      currentDraw: null
+      currentDraw: null,
+      storiesAdded: []
     }
   },
   computed: {
@@ -90,9 +91,8 @@ export default {
     },
     updateDrawArea (e) {
       let data = this.currentDraw.getAll();
-      console.log(data)
 
-      this.save()
+      this.saveNewArea(data)
 
       let answer = document.getElementById('calculated-area');
       if (data.features.length > 0) {
@@ -108,6 +108,8 @@ export default {
         if (e.type !== 'draw.delete')
             alert('Use the draw tools to draw a polygon!');
       }
+
+      this.currentDraw.deleteAll()
     },
     onClickStory (s) {
       console.log('clicked story', s)
@@ -153,6 +155,43 @@ export default {
         'fill-opacity': 0.8
         }
       })
+      this.storiesAdded.push(story.id)
+    },
+    saveNewArea (data) {
+      console.log("data to save", data)
+      let coordData = []
+      data.features[0].geometry.coordinates[0].forEach((coord) => {
+        console.log(coord)
+        coordData.push({
+          lng: coord[0],
+          lat: coord[1]
+        })
+      })
+
+      let entity = {
+        title: 'Story 1',
+        description: 'Lorem ipsum dolor sit amet.',
+        date: 1545096864,
+        thumbnail: '',
+        author: 'Samantha',
+        lat: -22.913731,
+        lng: -43.182279,
+        geometry: {
+          coordinates: coordData
+        },
+        photos: [
+          {
+            url: ''
+          },
+          {
+            url: ''
+          },
+          {
+            url: ''
+          }
+        ]
+      }
+      this.save(entity)
     },
     ...mapActions('map', [
       'setLastLocation'
@@ -162,6 +201,15 @@ export default {
     ])
   },
   watch: {
+    stories () {
+      if (!this.mapbox) return
+      this.stories.forEach(story => {
+        if (this.storiesAdded.indexOf(story.id) === -1) {
+          console.log('adding', story.title)
+          this.addToMap(story)
+        }
+      })
+    }
   }
 }
 </script>
