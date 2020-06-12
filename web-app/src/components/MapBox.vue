@@ -93,7 +93,6 @@ export default {
       await this.stories.length > 0
       console.log(this.stories)
       this.stories.forEach(story => {
-        console.log('adding', story.title)
         this.addToMap(story)
       })
 
@@ -113,7 +112,6 @@ export default {
       // this.mapbox.on('draw.delete', this.updateDrawArea);
       // this.mapbox.on('draw.update', this.updateDrawArea);
 
-      console.log(this.currentDraw)
     },
     updateDrawArea (e) {
       let data = this.currentDraw.getAll();
@@ -157,15 +155,14 @@ export default {
     addToMap (story) {
 
       if (!this.mapbox) return
-      let here = []
-      this.storiesAdded.forEach((s) => here.push(s.id))
+      let addedIds = []
+      this.storiesAdded.forEach((s) => addedIds.push(s.id))
 
-      this.stories.forEach(story => {
-        if (here.indexOf(story.id) !== -1) {
-          console.log('duplicated')
-          return
-        }
-      })
+      if (addedIds.indexOf(story.id) !== -1) {
+        console.log('duplicated')
+        return
+      }
+      console.log("adding", story)
 
       this.mapbox.addSource(story.id, {
         "type": "geojson",
@@ -183,6 +180,8 @@ export default {
           }
         }
       });
+      this.storiesAdded.push(story)
+
       /*
       this.mapbox.addLayer({
         'id': story.id,
@@ -195,7 +194,6 @@ export default {
         }
       })
       */
-      this.storiesAdded.push(story)
     },
     saveNewArea (data) {
       console.log("data to save", data)
