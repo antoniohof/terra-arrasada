@@ -8,7 +8,27 @@
     @load="onMapLoaded"
     @zoomend="onZoomChanged"
     @dragend="onCenterChanged"
-    />
+    >
+    <MglMarker
+    v-for="(story, index) in storiesAdded"
+    :key="index"
+    :coordinates="getCenterLayer(story)"
+    >
+      <MglPopup>
+        <PodcastPill :story="story">
+        </PodcastPill>
+      </MglPopup>
+    </MglMarker>
+    <MglGeojsonLayer
+      v-for="story in storiesAdded"
+      :key="story.id"
+      :sourceId="story.id"
+      :layerId="story.id"
+      :layer="layerInfo(story.id)"
+      @click="onClickedStory(story)"
+    >
+    </MglGeojsonLayer>
+    </MglMap>
   <div class="calculation-box">
     <p>Draw a polygon using the draw tools.</p>
     <div id="calculated-area"></div>
@@ -18,13 +38,18 @@
 <script>
 var MapboxDraw = require('@mapbox/mapbox-gl-draw');
 import { mapGetters, mapActions } from 'vuex'
-import { MglMap } from "vue-mapbox";
+import { MglMap, MglGeojsonLayer, MglPopup, MglMarker  } from "vue-mapbox";
 import {
+  PodcastPill
 } from '@/components/atoms'
 
 export default {
   components: {
-    MglMap
+    MglMap,
+    MglGeojsonLayer,
+    MglPopup,
+    MglMarker,
+    PodcastPill
   },
   props: {
     stories: Array
@@ -55,6 +80,7 @@ export default {
   methods: {
     async onMapLoaded(evt) {
       this.mapbox = evt.map
+      console.log(this.mapbox)
       // Here we cathing 'load' map event
       // const asyncActions = event.component.actions
 
@@ -111,7 +137,7 @@ export default {
 
       this.currentDraw.deleteAll()
     },
-    onClickStory (s) {
+    onClickedStory (s) {
       console.log('clicked story', s)
       if (this.lastSelected !== s.id) {
         this.lastSelected = s.id
@@ -129,6 +155,18 @@ export default {
       return this.stories.find((story) => story.id === id)
     },
     addToMap (story) {
+
+      if (!this.mapbox) return
+      let here = []
+      this.storiesAdded.forEach((s) => here.push(s.id))
+
+      this.stories.forEach(story => {
+        if (here.indexOf(story.id) !== -1) {
+          console.log('duplicated')
+          return
+        }
+      })
+
       this.mapbox.addSource(story.id, {
         "type": "geojson",
         "data": {
@@ -145,6 +183,7 @@ export default {
           }
         }
       });
+      /*
       this.mapbox.addLayer({
         'id': story.id,
         'type': 'fill',
@@ -155,7 +194,8 @@ export default {
         'fill-opacity': 0.8
         }
       })
-      this.storiesAdded.push(story.id)
+      */
+      this.storiesAdded.push(story)
     },
     saveNewArea (data) {
       console.log("data to save", data)
@@ -193,6 +233,30 @@ export default {
       }
       this.save(entity)
     },
+    layerInfo (id) {
+      return {
+        'id': id,
+        'type': 'fill',
+        'source': id,
+        'layout': {},
+        'paint': {
+        'fill-color': '#088',
+        'fill-opacity': 0.8
+        }
+      }
+    },
+    getCenterLayer (story) {
+      if (!this.mapbox) return
+      let src = this.mapbox.getSource(story.id)
+      if (src) {
+        let center = window.turf.centroid(src._data);
+        console.log(src)
+        console.log(center.geometry.coordinates)
+        return center.geometry.coordinates
+      } else {
+        return [0,0]
+      }
+    },
     ...mapActions('map', [
       'setLastLocation'
     ]),
@@ -204,10 +268,7 @@ export default {
     stories () {
       if (!this.mapbox) return
       this.stories.forEach(story => {
-        if (this.storiesAdded.indexOf(story.id) === -1) {
-          console.log('adding', story.title)
-          this.addToMap(story)
-        }
+        this.addToMap(story)
       })
     }
   }

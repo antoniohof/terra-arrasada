@@ -56,13 +56,4 @@ export default {
     display: flex
     .map
       width: 100%
-
-    @media (min-width: 992px)
-      display: flex
-      padding: 0px 20px 0
-      margin-right: 0
-      margin-left: 0
-      max-width: none
-      height: 80%
-
 </style>

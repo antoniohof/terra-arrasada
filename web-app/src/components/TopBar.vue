@@ -83,7 +83,7 @@ export default {
   width: 100%
   padding-right: 20px
   padding-left: 20px
-  background: red
+  background: yellow
   z-index: 10
   height: 50px
   .wrap
@@ -95,7 +95,7 @@ export default {
       justify-content: center
       align-self: center
       width: 50px
-      color: white
+      color: black
       img
         max-width: 100%
         height: auto
@@ -106,6 +106,7 @@ export default {
 
     .controls
       width: 50%
+      padding-right: 20px
       height: 50px
       display: flex
       align-content: right

@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    <div class='choose'>
-    </div>
   </div>
 </template>
 
@@ -22,13 +20,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.choose {
-  height: 90%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin-bottom: 200px;
-}
+
 
 </style>
