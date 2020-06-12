@@ -3,16 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store/index'
 import './registerServiceWorker'
-import * as VueGoogleMaps from 'vue2-google-maps'
 import firebase from 'firebase'
 Vue.config.productionTip = false
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: process.env.VUE_APP_MAPS_KEY,
-    libraries: 'places'
-  }
-})
 
 new Vue({
   router,
@@ -41,7 +33,7 @@ export const db = firebase.firestore()
 export const storage = firebase.storage().ref();
 
 // console.log('storage', storage)
-// console.log('db', db)
+console.log('db', db)
 /*
 db.collection("users").onSnapshot(() => {
   console.warn('snapshotFIRST!')

@@ -1,9 +1,9 @@
 import Footer from './Footer'
 import TopBar from './TopBar'
-import Maps from './Maps'
+import MapBox from './MapBox'
 
 export {
   Footer,
   TopBar,
-  Maps
+  MapBox
 }

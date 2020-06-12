@@ -1,8 +1,8 @@
 <template>
   <section class="explore">
     <section class="explore_content">
-      <Maps :stories='getStories' class='map'>
-      </Maps>
+      <MapBox :stories='getStories' class='map'>
+      </MapBox>
     </section>
   </section>
 </template>
@@ -11,7 +11,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import {
-  Maps
+  MapBox
 } from '@/components'
 
 export default {
@@ -22,7 +22,7 @@ export default {
   updated () {
   },
   components: {
-    Maps
+    MapBox
   },
   computed: {
     ...mapGetters('story',

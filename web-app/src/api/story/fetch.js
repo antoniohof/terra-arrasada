@@ -23,48 +23,25 @@ const fetch = () =>
             author: 'Samantha',
             lat: -22.913731,
             lng: -43.182279,
-            chapters: {
-              id: 0,
-              url: '',
-              name: 'Chapter 1',
-              photos: [
-                {
-                  url: ''
-                },
-                {
-                  url: ''
-                },
-                {
-                  url: ''
-                }
+            geometry: {
+              coordinates: [
+                [102.11806158995955, 69.08880731687233],
+                [100.02547091545694, 66.13248462554594],
+                [109.89054123810831, 67.14001090921067],
+                [102.11806158995955, 69.08880731687233]
               ]
-            }
-          },
-          {
-            id: 1,
-            title: 'Story 2',
-            description: 'Lorem ipsum dolor sit amet.',
-            date: 1545096864,
-            thumbnail: '',
-            author: 'Daniel',
-            lat: -22.929967,
-            lng: -43.270760,
-            chapters: {
-              id: 0,
-              url: '',
-              name: 'Chapter 1',
-              photos: [
-                {
-                  url: ''
-                },
-                {
-                  url: ''
-                },
-                {
-                  url: ''
-                }
-              ]
-            }
+            },
+            photos: [
+              {
+                url: ''
+              },
+              {
+                url: ''
+              },
+              {
+                url: ''
+              }
+            ]
           }
         ]
       }
