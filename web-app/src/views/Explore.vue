@@ -1,8 +1,7 @@
 <template>
   <section class="explore">
     <section class="explore_content">
-      <MapBox :stories='getStories' class='map'>
-      </MapBox>
+      <MapBox :stories="getStories" class="map"></MapBox>
     </section>
   </section>
 </template>
@@ -16,7 +15,6 @@ import {
 
 export default {
   mounted () {
-    this.fetchStories()
     this.fetchUserPosition()
   },
   updated () {
@@ -28,8 +26,7 @@ export default {
     ...mapGetters('story',
       [
         'getStories'
-      ]
-    )
+      ])
   },
   methods: {
     ...mapActions('story',
@@ -47,7 +44,6 @@ export default {
 <style lang="sass" scoped>
 .explore
   z-index: 0
-  margin-top: 50px
   @media (min-width: 992px)
     overflow-y: hidden
   &_content

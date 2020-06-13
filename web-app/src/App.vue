@@ -1,11 +1,7 @@
 <template>
   <div id="app">
-    <TopBar>
-    </TopBar>
-    <router-view
-      class="view"
-      :class="{ 'margintop': $route.meta.top.show}"
-    ></router-view>
+    <TopBar></TopBar>
+    <router-view class="view" :class="{ 'margintop': $route.meta.top.show}"></router-view>
     <!--
     <Footer>
     </Footer>
@@ -14,8 +10,7 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
-// import { db } from "@/main.js" // <--- or wherever the config file is
+import { mapActions } from 'vuex'
 
 import {
   TopBar
@@ -33,12 +28,17 @@ export default {
     console.log('app created')
   },
   mounted () {
+    this.fetchStories()
   },
   updated () {
   },
   computed: {
   },
   methods: {
+    ...mapActions('story',
+    [
+      'fetchStories'
+    ])
   },
   watch: {
   },
@@ -50,7 +50,7 @@ export default {
 
 <style lang="sass">
 #app
-  font-family: 'Avenir', Helvetica, Arial, sans-serif
+  font-family: 'Heebo', sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   text-align: center
@@ -63,6 +63,7 @@ export default {
     width: 100%
     height: 100vh
   .margintop
+    margin-top: 50px
     height: calc(100vh - 50px) !important
 
 #nav

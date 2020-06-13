@@ -4,7 +4,7 @@
       <a class="wrap_back" v-if="getMeta.back" @click="goBack">
         <img src="static/icons/backarrow-icon.svg" />
       </a>
-      <router-link class="wrap_logo" v-if="!getMeta.back" to="/" tag="a">LOGO</router-link>
+      <router-link class="wrap_logo" v-if="!getMeta.back" to="/" tag="a">Terra Arrasada</router-link>
       <div class="controls">
         <!--
           <div
@@ -12,6 +12,11 @@
             :class="{ 'controls_btn--selected': $route.path === '/create' }"
           >Create</div>
         -->
+        <div
+          @click="$router.push('/login')"
+          class="controls_btn"
+          :class="{ 'controls_btn--selected': $route.path === '/login' }"
+        >Login</div>
         <div
           @click="$router.push('/explore')"
           class="controls_btn"
@@ -81,7 +86,7 @@ export default {
   width: 100%
   padding-right: 20px
   padding-left: 20px
-  background: $pallete-6
+  background: white
   z-index: 10
   height: 50px
   .wrap
@@ -90,15 +95,17 @@ export default {
     flex-direction: row
     width: 100%
     &_logo
+      text-decoration: line-through !important
+      font-weight: 1000
       justify-content: center
       align-self: center
-      width: 50px
-      color: white
+      width: 100px
+      color: black
       img
         max-width: 100%
         height: auto
     &_back
-      color: white
+      color: black
       width: 15px
       padding: 2px
 
@@ -110,15 +117,16 @@ export default {
       align-content: right
       justify-content: right
       flex-direction: row-reverse
+
       &_btn
         opacity: 0.4
         cursor: pointer
         width: 100px
         height: 100%
-        margin-left: 5px
-        font-weight: 100
+        margin-left: 1.2em
+        font-weight: 800
         font-size: 15px
-        color: white
+        color: black
         display: flex
         justify-content: center
         flex-direction: column
@@ -126,4 +134,7 @@ export default {
 
         &--selected
           opacity: 1
+
+        &:hover:not(.controls_btn--selected)
+          color: red
 </style>

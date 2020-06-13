@@ -78,7 +78,6 @@ export default {
   methods: {
     async onMapLoaded(evt) {
       this.mapbox = evt.map
-      console.log(this.mapbox)
       // Here we cathing 'load' map event
       // const asyncActions = event.component.actions
 
@@ -87,7 +86,7 @@ export default {
 
       console.log("map loaded")
 
-      this.mapbox.loadImage('/images/fill-red-3.png', (err, img) => {
+      this.mapbox.loadImage('/images/blood.png', (err, img) => {
         if (err) {
           console.error(err)
         }
@@ -96,7 +95,6 @@ export default {
 
       // add all the stories to the map
       await this.stories.length > 0
-      console.log(this.stories)
       this.stories.forEach(story => {
         this.addToMap(story)
       })
@@ -166,10 +164,8 @@ export default {
       this.storiesAdded.forEach((s) => addedIds.push(s.id))
 
       if (addedIds.indexOf(story.id) !== -1) {
-        console.log('duplicated')
         return
       }
-      console.log("adding", story)
 
       this.mapbox.addSource(story.id, {
         "type": "geojson",
@@ -246,7 +242,7 @@ export default {
         'layout': {},
         'paint': {
         //'fill-pattern': 'pattern',
-        'fill-color': '#C96567', // pallete 4
+        'fill-color': '#933922', // pallete 4
         'fill-opacity': 0.5,
         'fill-outline-color': 'black'
         }
@@ -257,8 +253,6 @@ export default {
       let src = this.mapbox.getSource(story.id)
       if (src) {
         let center = window.turf.centroid(src._data);
-        console.log(src)
-        console.log(center.geometry.coordinates)
         return center.geometry.coordinates
       } else {
         return [0,0]
@@ -315,7 +309,6 @@ export default {
   text-align: center
 
   p
-    font-family: 'Open Sans'
     margin: 0
     font-size: 13px
 </style>

@@ -1,12 +1,9 @@
 <template>
-  <div class="pill" v-show="ready">
+  <div class="pill">
     <div class="pill_line"></div>
     <div class="pill_info">
       <h3 class="pill_info_title">{{ story.title }}</h3>
-      <a
-        class="pill_info_description"
-        @click="showStory"
-      >GO TO STORY PAGE: ID: {{story ? story.id : ''}}</a>
+      <a class="pill_info_description" @click="showStory">{{story.description}}</a>
     </div>
   </div>
 </template>
@@ -25,19 +22,12 @@ export default {
   },
   methods: {
     showStory () {
-      console.log('this story', this.story)
       this.$router.push('/stories/' + this.story.id)
     }
   },
   mounted () {
-    setTimeout(() => {
-      console.log("ready")
-      this.ready = true
-    }, 500)
-    console.log('this story', this.story)
   },
   updated () {
-    console.log('this story', this.story)
   }
 }
 </script>
@@ -50,8 +40,9 @@ export default {
   z-index: 1
 
 .mapboxgl-popup-content
-  background: $pallete-1 !important
-  padding: 0px !important
+  background: white
+  padding: 1px !important
+  height: auto
 
 .mapboxgl-popup-close-button
   color: white !important
@@ -60,19 +51,20 @@ export default {
 <style lang="sass" scoped>
 .pill
   background: transparent
-  height: 100px
+  height: auto
+  min-height: 30px
   &_line
 
   &_info
     width: 200px
-    height: 100%
+    height: auto
     cursor: pointer
-    background: $pallete-1
-    font-weight: 500
+    background: black
     &_title
+      font-weight: 900
       color: white
-      font-family: "Exo 2"
     &_description
-      font-family: "Exo 2"
+      font-weight: 300
       color: white
+      margin-bottom: 2px
 </style>
