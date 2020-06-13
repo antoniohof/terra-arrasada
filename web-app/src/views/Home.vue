@@ -49,7 +49,8 @@ export default {
         'Fracking',
         'Wild Animal Trafficking',
         'Toxic Waste',
-        'Aquifer Contamination'
+        'Aquifer Contamination',
+        'Greenhouse Gas Emission'
       ],
       currentMessages: [],
       messageAnimation: null,
@@ -78,7 +79,6 @@ export default {
         this.currentMessages = []
         this.currentMessages.push(newMessage)
         this.currentMessages.push(newMessage2)
-        console.log(this.currentMessages)
       }, 2000)
     },
     async setupScene () {
@@ -180,7 +180,7 @@ export default {
     width: 400px
     height: 100px
     left: 50%
-    top: calc(50%)
+    top: 50%
     -webkit-transform: translate(-50%, 0)
     transform: translate(-50%, 0)
     cursor: pointer

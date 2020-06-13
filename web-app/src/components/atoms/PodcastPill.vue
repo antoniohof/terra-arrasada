@@ -42,7 +42,7 @@ export default {
 .mapboxgl-popup-content
   background: white
   padding: 1px !important
-  height: auto
+  height: fit-content
 
 .mapboxgl-popup-close-button
   color: white !important

@@ -2,7 +2,7 @@
   <div class="map">
     <MglMap
       :accessToken="accessToken"
-      mapStyle="mapbox://styles/antoniohof/ckbc8ga6a0z9z1ild616htc33?optimize=true"
+      mapStyle="mapbox://styles/antoniohof/ckbdmlsim237n1jqzu8lrebsx?optimize=true"
       :center="this.initialCenter"
       :zoom="this.initialZoom"
       @load="onMapLoaded"
@@ -14,7 +14,7 @@
         :key="index"
         :coordinates="getCenterLayer(story)"
       >
-        <div slot="marker" class="marker" />
+        <div :id="'marker_' + story.id" slot="marker" class="marker" />
         <MglPopup>
           <PodcastPill :story="story"></PodcastPill>
         </MglPopup>
@@ -73,6 +73,10 @@ export default {
   computed: {
     ...mapGetters('map', [
       'getLastLocation'
+    ]),
+    ...mapGetters('explore', [
+      'getIsAnimating',
+      'getCurrentStory'
     ])
   },
   methods: {
@@ -115,6 +119,7 @@ export default {
       // this.mapbox.on('draw.delete', this.updateDrawArea);
       // this.mapbox.on('draw.update', this.updateDrawArea);
 
+      this.$emit('loaded')
     },
     updateDrawArea (e) {
       let data = this.currentDraw.getAll();
@@ -215,8 +220,8 @@ export default {
         date: 1545096864,
         thumbnail: '',
         author: 'Samantha',
-        lat: -22.913731,
-        lng: -43.182279,
+        city: 'Rio de Janeiro',
+        state: 'Brazil',
         geometry: {
           coordinates: coordData
         },
@@ -249,7 +254,6 @@ export default {
       }
     },
     getCenterLayer (story) {
-      if (!this.mapbox) return
       let src = this.mapbox.getSource(story.id)
       if (src) {
         let center = window.turf.centroid(src._data);
@@ -271,6 +275,20 @@ export default {
       this.stories.forEach(story => {
         this.addToMap(story)
       })
+    },
+    getCurrentStory (story) {
+      if (story === null || !this.mapbox) {
+        return
+      }
+      console.log('get current story', story)
+      console.log('is animating')
+      this.mapbox.flyTo({
+        center: this.getCenterLayer(story),
+        essential: true,
+        zoom: 6
+      })
+      let marker = document.querySelector('#marker_' + story.id)
+      marker.click()
     }
   }
 }
