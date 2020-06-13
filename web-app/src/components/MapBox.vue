@@ -1,39 +1,38 @@
 <template>
-  <div class='map'>
+  <div class="map">
     <MglMap
-    :accessToken="accessToken"
-    mapStyle="mapbox://styles/antoniohof/ckbc8ga6a0z9z1ild616htc33?optimize=true"
-    :center="this.initialCenter"
-    :zoom="this.initialZoom"
-    @load="onMapLoaded"
-    @zoomend="onZoomChanged"
-    @dragend="onCenterChanged"
+      :accessToken="accessToken"
+      mapStyle="mapbox://styles/antoniohof/ckbc8ga6a0z9z1ild616htc33?optimize=true"
+      :center="this.initialCenter"
+      :zoom="this.initialZoom"
+      @load="onMapLoaded"
+      @zoomend="onZoomChanged"
+      @dragend="onCenterChanged"
     >
-    <MglMarker
-    v-for="(story, index) in storiesAdded"
-    :key="index"
-    :coordinates="getCenterLayer(story)"
-    >
-      <MglPopup>
-        <PodcastPill :story="story">
-        </PodcastPill>
-      </MglPopup>
-    </MglMarker>
-    <MglGeojsonLayer
-      v-for="story in storiesAdded"
-      :key="story.id"
-      :sourceId="story.id"
-      :layerId="story.id"
-      :layer="layerInfo(story.id)"
-      @click="onClickedStory(story)"
-    >
-    </MglGeojsonLayer>
+      <MglMarker
+        v-for="(story, index) in storiesAdded"
+        :key="index"
+        :coordinates="getCenterLayer(story)"
+      >
+        <div slot="marker" class="marker" />
+        <MglPopup>
+          <PodcastPill :story="story"></PodcastPill>
+        </MglPopup>
+      </MglMarker>
+      <MglGeojsonLayer
+        v-for="story in storiesAdded"
+        :key="story.id"
+        :sourceId="story.id"
+        :layerId="story.id"
+        :layer="layerInfo(story.id)"
+        @click="onClickedStory(story)"
+      ></MglGeojsonLayer>
     </MglMap>
-  <div class="calculation-box">
-    <p>Draw a polygon using the draw tools.</p>
-    <div id="calculated-area"></div>
+    <div class="calculation-box">
+      <p>Draw a polygon using the draw tools.</p>
+      <div id="calculated-area"></div>
+    </div>
   </div>
-</div>
 </template>
 <script>
 var MapboxDraw = require('@mapbox/mapbox-gl-draw');
@@ -42,7 +41,6 @@ import { MglMap, MglGeojsonLayer, MglPopup, MglMarker  } from "vue-mapbox";
 import {
   PodcastPill
 } from '@/components/atoms'
-
 export default {
   components: {
     MglMap,
@@ -88,6 +86,13 @@ export default {
       // await asyncActions.setZoom(this.getLastLocation.zoom)
 
       console.log("map loaded")
+
+      this.mapbox.loadImage('/images/fill-red-3.png', (err, img) => {
+        if (err) {
+          console.error(err)
+        }
+        this.mapbox.addImage('pattern', img)
+      })
 
       // add all the stories to the map
       await this.stories.length > 0
@@ -138,7 +143,9 @@ export default {
     onClickedStory (s) {
       console.log('clicked story', s)
       if (this.lastSelected !== s.id) {
-        this.lastSelected = s.id
+        setTimeout(() => {
+          this.lastSelected = s.id
+        }, 100)
       }
     },
     onZoomChanged (evt) {
@@ -238,8 +245,10 @@ export default {
         'source': id,
         'layout': {},
         'paint': {
-        'fill-color': '#088',
-        'fill-opacity': 0.8
+        //'fill-pattern': 'pattern',
+        'fill-color': '#C96567', // pallete 4
+        'fill-opacity': 0.5,
+        'fill-outline-color': 'black'
         }
       }
     },
@@ -273,17 +282,37 @@ export default {
 }
 </script>
 
+<style lang='sass'>
+.marker
+  height: 15px !important
+  width: 15px
+  background-color: black
+  border-radius: 50%
+  display: inline-block
+  cursor: pointer
+
+.slide-fade-enter-active
+  transition: all 1s ease !important
+
+.slide-fade-leave-active
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0) !important
+
+.slide-fade-enter, .slide-fade-leave-to
+  transform: translateX(100px) !important
+  opacity: 0 !important
+</style>
+
 <style lang='sass' scoped>
-  .calculation-box
-    z-index: 1000
-    height: 120px
-    width: 150px
-    position: absolute
-    bottom: 100px
-    left: 10px
-    background-color: rgba(255, 255, 255, 0.9)
-    padding: 15px
-    text-align: center
+.calculation-box
+  z-index: 1000
+  height: 120px
+  width: 150px
+  position: absolute
+  bottom: 100px
+  left: 10px
+  background-color: rgba(255, 255, 255, 0.9)
+  padding: 15px
+  text-align: center
 
   p
     font-family: 'Open Sans'

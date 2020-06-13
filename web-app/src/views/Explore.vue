@@ -45,7 +45,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
 .explore
   z-index: 0
   margin-top: 50px

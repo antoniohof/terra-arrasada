@@ -1,32 +1,30 @@
 <template>
-  <transition name="fade">
-    <header class="topbar" v-if="getMeta">
-      <div class="wrap">
-        <a class="wrap_back" v-if='getMeta.back' @click="goBack">
-          <img src="static/icons/backarrow-icon.svg">
-        </a>
-        <router-link class="wrap_logo" v-if='!getMeta.back' to="/" tag="a">
-        LOGO
-        </router-link>
-        <div class="controls">
-          <!--
+  <header class="topbar" v-if="getMeta">
+    <div class="wrap">
+      <a class="wrap_back" v-if="getMeta.back" @click="goBack">
+        <img src="static/icons/backarrow-icon.svg" />
+      </a>
+      <router-link class="wrap_logo" v-if="!getMeta.back" to="/" tag="a">LOGO</router-link>
+      <div class="controls">
+        <!--
           <div
             class="controls_btn"
             :class="{ 'controls_btn--selected': $route.path === '/create' }"
           >Create</div>
-          -->
-          <div @click="$router.push('/explore')"
-            class="controls_btn"
-            :class="{ 'controls_btn--selected': $route.path === '/explore' }"
-          >Explore</div>
-          <div @click="$router.push('/')"
-            class="controls_btn"
-            :class="{ 'controls_btn--selected': $route.path === '/' }"
-          >Home</div>
-        </div>
+        -->
+        <div
+          @click="$router.push('/explore')"
+          class="controls_btn"
+          :class="{ 'controls_btn--selected': $route.path === '/explore' }"
+        >Explore</div>
+        <div
+          @click="$router.push('/')"
+          class="controls_btn"
+          :class="{ 'controls_btn--selected': $route.path === '/' }"
+        >Home</div>
       </div>
-    </header>
-  </transition>
+    </div>
+  </header>
 </template>
 
 <script>
@@ -83,7 +81,7 @@ export default {
   width: 100%
   padding-right: 20px
   padding-left: 20px
-  background: yellow
+  background: $pallete-6
   z-index: 10
   height: 50px
   .wrap
@@ -95,7 +93,7 @@ export default {
       justify-content: center
       align-self: center
       width: 50px
-      color: black
+      color: white
       img
         max-width: 100%
         height: auto
@@ -120,7 +118,7 @@ export default {
         margin-left: 5px
         font-weight: 100
         font-size: 15px
-        color: black
+        color: white
         display: flex
         justify-content: center
         flex-direction: column
@@ -128,5 +126,4 @@ export default {
 
         &--selected
           opacity: 1
-
 </style>

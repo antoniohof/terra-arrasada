@@ -1,5 +1,4 @@
 <template>
-  <transition name="fade">
     <header class="footer">
       <div class="wrap">
         <!--
@@ -28,7 +27,6 @@
         </div>
       </div>
     </header>
-  </transition>
 </template>
 
 <script>

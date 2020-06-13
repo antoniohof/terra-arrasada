@@ -49,7 +49,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import 'src/assets/css/normalize/_import-now.scss'
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased

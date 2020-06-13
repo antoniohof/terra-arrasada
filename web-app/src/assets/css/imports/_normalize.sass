@@ -1,0 +1,3820 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
+  margin: 0
+  padding: 0
+  border: 0
+  box-sizing: border-box
+  font-size: 100%
+  vertical-align: baseline
+  letter-spacing: 0.5px
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section
+  display: block
+
+body
+  line-height: 1
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+
+ol, ul
+  list-style: none
+
+blockquote, q
+  quotes: none
+
+blockquote
+  &:before, &:after
+    content: ''
+    content: none
+
+q
+  &:before, &:after
+    content: ''
+    content: none
+
+table
+  border-collapse: collapse
+  border-spacing: 0
+
+.offline-ui
+  .offline-ui-retry:before
+    content: "Reconnect"
+  &.offline-ui-up .offline-ui-content:before
+    content: "Your computer is connected to the internet."
+  &.offline-ui-down
+    .offline-ui-content:before
+      content: "Your computer lost its internet connection."
+    &.offline-ui-connecting .offline-ui-content:before, &.offline-ui-connecting-2s .offline-ui-content:before
+      content: "Attempting to reconnect..."
+    &.offline-ui-waiting .offline-ui-content
+      &[data-retry-in-unit="second"]
+        &:before
+          content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " seconds..."
+        &[data-retry-in-value="1"]:before
+          content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " second..."
+      &[data-retry-in-unit="minute"]
+        &:before
+          content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " minutes..."
+        &[data-retry-in-value="1"]:before
+          content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " minute..."
+      &[data-retry-in-unit="hour"]
+        &:before
+          content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " hours..."
+        &[data-retry-in-value="1"]:before
+          content: "Connection lost. Reconnecting in " attr(data-retry-in-value) " hour..."
+    &.offline-ui-reconnect-failed-2s
+      &.offline-ui-waiting .offline-ui-retry
+        display: none
+      .offline-ui-content:before
+        content: "Connection attempt failed."
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+  *, &:before, &:after
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+  *
+    &:before, &:after
+      -webkit-box-sizing: border-box
+      -moz-box-sizing: border-box
+      box-sizing: border-box
+  display: none
+  position: absolute
+  background: white
+  z-index: 90
+  margin: auto
+  top: 71px
+  font-size: 10px !important
+  left: 0
+  right: 0
+  .offline-ui-content:before
+    display: inline
+  .offline-ui-retry
+    -webkit-user-select: none
+    -moz-user-select: none
+    user-select: none
+    display: none
+    &:before
+      display: inline
+  &.offline-ui-up.offline-ui-up-5s
+    display: block
+  &.offline-ui-down
+    display: block
+    &.offline-ui-waiting .offline-ui-retry
+      display: block
+    &.offline-ui-reconnect-failed-2s.offline-ui-waiting .offline-ui-retry
+      display: none
+  -webkit-border-radius: 0 0 4px 4px
+  -moz-border-radius: 0 0 4px 4px
+  -ms-border-radius: 0 0 4px 4px
+  -o-border-radius: 0 0 4px 4px
+  border-radius: 0 0 4px 4px
+  font-weight: 300
+  padding: 0.5em
+  width: 38em
+  max-width: 100%
+  background: black
+  color: #cccccc
+  overflow: hidden
+  .offline-ui-content
+    padding-left: 2em
+    &:before
+      line-height: 1.25em
+    &:after
+      -webkit-border-radius: 50%
+      -moz-border-radius: 50%
+      -ms-border-radius: 50%
+      -o-border-radius: 50%
+      border-radius: 50%
+      content: " "
+      display: block
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 1em
+      margin: auto
+      height: 1em
+      width: 1em
+  .offline-ui-retry
+    position: absolute
+    right: 3em
+    top: 0
+    bottom: 0
+    background: rgba(255, 255, 255, 0.2)
+    text-decoration: none
+    color: inherit
+    line-height: 3.5em
+    height: 3.5em
+    margin: auto
+    padding: 0 1em
+  &.offline-ui-up
+    -webkit-animation: offline-dropout forwards 0.5s 2s
+    -moz-animation: offline-dropout forwards 0.5s 2s
+    -ms-animation: offline-dropout forwards 0.5s 2s
+    -o-animation: offline-dropout forwards 0.5s 2s
+    animation: offline-dropout forwards 0.5s 2s
+    -webkit-backface-visibility: hidden
+    .offline-ui-content:after
+      background: #80d580
+  &.offline-ui-down
+    -webkit-animation: offline-dropin 0.5s
+    -moz-animation: offline-dropin 0.5s
+    -ms-animation: offline-dropin 0.5s
+    -o-animation: offline-dropin 0.5s
+    animation: offline-dropin 0.5s
+    -webkit-backface-visibility: hidden
+    .offline-ui-content:after
+      background: #e24949
+    &.offline-ui-connecting, &.offline-ui-waiting
+      padding-right: 3em
+    &.offline-ui-connecting .offline-ui-content:after, &.offline-ui-waiting .offline-ui-content:after
+      background: #e24949
+    &.offline-ui-connecting:after
+      -webkit-animation: offline-rotation 0.7s linear infinite
+      -moz-animation: offline-rotation 0.7s linear infinite
+      -ms-animation: offline-rotation 0.7s linear infinite
+      -o-animation: offline-rotation 0.7s linear infinite
+      animation: offline-rotation 0.7s linear infinite
+      -webkit-backface-visibility: hidden
+      -webkit-border-radius: 50%
+      -moz-border-radius: 50%
+      -ms-border-radius: 50%
+      -o-border-radius: 50%
+      border-radius: 50%
+      content: " "
+      display: block
+      position: absolute
+      right: 1em
+      top: 0
+      bottom: 0
+      margin: auto
+      height: 1em
+      width: 1em
+      border: 2px solid transparent
+      border-top-color: rgba(255, 255, 255, 0.5)
+      border-left-color: rgba(255, 255, 255, 0.5)
+      opacity: 0.7
+    &.offline-ui-waiting
+      &:after
+        -webkit-animation: offline-rotation 0.7s linear infinite
+        -moz-animation: offline-rotation 0.7s linear infinite
+        -ms-animation: offline-rotation 0.7s linear infinite
+        -o-animation: offline-rotation 0.7s linear infinite
+        animation: offline-rotation 0.7s linear infinite
+        -webkit-backface-visibility: hidden
+        -webkit-border-radius: 50%
+        -moz-border-radius: 50%
+        -ms-border-radius: 50%
+        -o-border-radius: 50%
+        border-radius: 50%
+        content: " "
+        display: block
+        position: absolute
+        right: 1em
+        top: 0
+        bottom: 0
+        margin: auto
+        height: 1em
+        width: 1em
+        border: 2px solid transparent
+        border-top-color: rgba(255, 255, 255, 0.5)
+        border-left-color: rgba(255, 255, 255, 0.5)
+        opacity: 0.7
+      padding-right: 11em
+      &.offline-ui-reconnect-failed-2s
+        padding-right: 0
+
+@media (max-width: 1024px)
+
+  .offline-ui.offline-ui-up .offline-ui-content:before
+    content: "Your device is connected to the internet."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-up .offline-ui-content:before
+    content: "Your device is connected."
+
+@media (max-width: 1024px)
+
+  .offline-ui.offline-ui-down .offline-ui-content:before
+    content: "Your device lost its internet connection."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down .offline-ui-content:before
+    content: "Your device isn't connected."
+
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="second"]:before
+    content: "Reconnecting in " attr(data-retry-in-value) "s..."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="second"][data-retry-in-value="1"]:before
+    content: "Reconnecting in " attr(data-retry-in-value) "s..."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="minute"]:before
+    content: "Reconnecting in " attr(data-retry-in-value) "m..."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="minute"][data-retry-in-value="1"]:before
+    content: "Reconnecting in " attr(data-retry-in-value) "m..."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="hour"]:before
+    content: "Reconnecting in " attr(data-retry-in-value) "h..."
+
+@media (max-width: 568px)
+
+  .offline-ui.offline-ui-down.offline-ui-waiting .offline-ui-content[data-retry-in-unit="hour"][data-retry-in-value="1"]:before
+    content: "Reconnecting in " attr(data-retry-in-value) "h..."
+
+@-webkit-keyframes offline-dropin
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 0
+  1%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 0
+  2%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 1
+  100%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 1
+
+@-moz-keyframes offline-dropin
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 0
+  1%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 0
+  2%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 1
+  100%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 1
+
+@-ms-keyframes offline-dropin
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 0
+  1%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 0
+  2%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 1
+  100%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 1
+
+@-o-keyframes offline-dropin
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 0
+  1%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 0
+  2%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 1
+  100%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 1
+
+@keyframes offline-dropin
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 0
+  1%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 0
+  2%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+    opacity: 1
+  100%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+    opacity: 1
+
+@-webkit-keyframes offline-dropout
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+  100%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+
+@-moz-keyframes offline-dropout
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+  100%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+
+@-ms-keyframes offline-dropout
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+  100%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+
+@-o-keyframes offline-dropout
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+  100%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+
+@keyframes offline-dropout
+  0%
+    transform: translateY(0)
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -ms-transform: translateY(0)
+    -o-transform: translateY(0)
+  100%
+    transform: translateY(-800px)
+    -webkit-transform: translateY(-800px)
+    -moz-transform: translateY(-800px)
+    -ms-transform: translateY(-800px)
+    -o-transform: translateY(-800px)
+
+@-webkit-keyframes offline-rotation
+  0%
+    transform: rotate(0deg)
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    -ms-transform: rotate(0deg)
+    -o-transform: rotate(0deg)
+  100%
+    transform: rotate(359deg)
+    -webkit-transform: rotate(359deg)
+    -moz-transform: rotate(359deg)
+    -ms-transform: rotate(359deg)
+    -o-transform: rotate(359deg)
+
+@-moz-keyframes offline-rotation
+  0%
+    transform: rotate(0deg)
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    -ms-transform: rotate(0deg)
+    -o-transform: rotate(0deg)
+  100%
+    transform: rotate(359deg)
+    -webkit-transform: rotate(359deg)
+    -moz-transform: rotate(359deg)
+    -ms-transform: rotate(359deg)
+    -o-transform: rotate(359deg)
+
+@-ms-keyframes offline-rotation
+  0%
+    transform: rotate(0deg)
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    -ms-transform: rotate(0deg)
+    -o-transform: rotate(0deg)
+  100%
+    transform: rotate(359deg)
+    -webkit-transform: rotate(359deg)
+    -moz-transform: rotate(359deg)
+    -ms-transform: rotate(359deg)
+    -o-transform: rotate(359deg)
+
+@-o-keyframes offline-rotation
+  0%
+    transform: rotate(0deg)
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    -ms-transform: rotate(0deg)
+    -o-transform: rotate(0deg)
+  100%
+    transform: rotate(359deg)
+    -webkit-transform: rotate(359deg)
+    -moz-transform: rotate(359deg)
+    -ms-transform: rotate(359deg)
+    -o-transform: rotate(359deg)
+
+@keyframes offline-rotation
+  0%
+    transform: rotate(0deg)
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    -ms-transform: rotate(0deg)
+    -o-transform: rotate(0deg)
+  100%
+    transform: rotate(359deg)
+    -webkit-transform: rotate(359deg)
+    -moz-transform: rotate(359deg)
+    -ms-transform: rotate(359deg)
+    -o-transform: rotate(359deg)
+
+@media (max-width: 38em)
+  .offline-ui
+    -webkit-border-radius: 0
+    -moz-border-radius: 0
+    -ms-border-radius: 0
+    -o-border-radius: 0
+    border-radius: 0
+
+html
+  line-height: 1.15
+  -ms-text-size-adjust: 100%
+  -webkit-text-size-adjust: 100%
+
+body
+  margin: 0
+
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary
+  display: block
+
+
+audio, canvas, progress, video
+  display: inline-block
+
+
+audio:not([controls])
+  display: none
+  height: 0
+
+
+progress
+  vertical-align: baseline
+
+template, [hidden]
+  display: none
+
+a
+  background-color: transparent
+  -webkit-text-decoration-skip: objects
+
+  &:active, &:hover
+    outline-width: 0
+
+abbr[title]
+  border-bottom: none
+  text-decoration: underline
+  text-decoration: underline dotted
+
+b, strong
+  font-weight: inherit
+
+b, strong
+  font-weight: bolder
+
+dfn
+  font-style: italic
+
+h1
+  font-size: 2em
+  margin: 0.67em 0
+
+mark
+  background-color: #ff0
+  color: #000
+
+small
+  font-size: 80%
+
+sub, sup
+  font-size: 75%
+  line-height: 0
+  position: relative
+  vertical-align: baseline
+
+sub
+  bottom: -0.25em
+
+sup
+  top: -0.5em
+
+img
+  border-style: none
+
+svg:not(:root)
+  overflow: hidden
+
+code, kbd, pre, samp
+  font-size: 1em
+
+figure
+  margin: 1em 40px
+
+hr
+  box-sizing: content-box
+  height: 0
+  overflow: visible
+
+button, input, optgroup, select, textarea
+  font: inherit
+  margin: 0
+
+optgroup
+  font-weight: bold
+
+button, input
+  overflow: visible
+
+button, select
+  text-transform: none
+
+button, html [type="button"], [type="reset"], [type="submit"]
+  -webkit-appearance: button
+
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner
+  border-style: none
+  padding: 0
+
+button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring
+  outline: 1px dotted ButtonText
+
+fieldset
+  border: 1px solid #c0c0c0
+  margin: 0 2px
+  padding: 0.35em 0.625em 0.75em
+
+legend
+  box-sizing: border-box
+  color: inherit
+  display: table
+  max-width: 100%
+  padding: 0
+  white-space: normal
+
+textarea
+  overflow: auto
+
+[type="checkbox"], [type="radio"]
+  box-sizing: border-box
+  padding: 0
+
+[type="number"]
+  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
+    height: auto
+
+[type="search"]
+  -webkit-appearance: textfield
+  outline-offset: -2px
+  &::-webkit-search-cancel-button, &::-webkit-search-decoration
+    -webkit-appearance: none
+
+\::-webkit-input-placeholder
+  color: inherit
+  opacity: 0.54
+
+\::-webkit-file-upload-button
+  -webkit-appearance: button
+  font: inherit
+
+#nprogress
+  pointer-events: none
+  .bar
+    background: #29d
+    position: fixed
+    z-index: 1031
+    top: 0
+    left: 0
+    width: 100%
+    height: 2px
+  .peg
+    display: block
+    position: absolute
+    right: 0px
+    width: 100px
+    height: 100%
+    box-shadow: 0 0 10px #29d, 0 0 5px #29d
+    opacity: 1.0
+    -webkit-transform: rotate(3deg) translate(0px, -4px)
+    -ms-transform: rotate(3deg) translate(0px, -4px)
+    transform: rotate(3deg) translate(0px, -4px)
+  .spinner
+    display: block
+    position: fixed
+    z-index: 1031
+    top: 15px
+    right: 15px
+  .spinner-icon
+    width: 18px
+    height: 18px
+    box-sizing: border-box
+    border: solid 2px transparent
+    border-top-color: #29d
+    border-left-color: #29d
+    border-radius: 50%
+    -webkit-animation: nprogress-spinner 400ms linear infinite
+    animation: nprogress-spinner 400ms linear infinite
+
+.nprogress-custom-parent
+  overflow: hidden
+  position: relative
+  #nprogress
+    .spinner, .bar
+      position: absolute
+
+@-webkit-keyframes nprogress-spinner
+  0%
+    -webkit-transform: rotate(0deg)
+
+  100%
+    -webkit-transform: rotate(360deg)
+
+@keyframes nprogress-spinner
+  0%
+    transform: rotate(0deg)
+
+  100%
+    transform: rotate(360deg)
+
+@-webkit-keyframes scale
+  0%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 1
+
+  45%
+    -webkit-transform: scale(0.1)
+    transform: scale(0.1)
+    opacity: 0.7
+
+  80%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 1
+
+@keyframes scale
+  0%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 1
+
+  45%
+    -webkit-transform: scale(0.1)
+    transform: scale(0.1)
+    opacity: 0.7
+
+  80%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 1
+
+.ball-pulse > div
+  &:nth-child(0)
+    -webkit-animation: scale 0.75s -0.36s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: scale 0.75s -0.36s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(1)
+    -webkit-animation: scale 0.75s -0.24s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: scale 0.75s -0.24s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(2)
+    -webkit-animation: scale 0.75s -0.12s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: scale 0.75s -0.12s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(3)
+    -webkit-animation: scale 0.75s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: scale 0.75s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+
+@-webkit-keyframes ball-pulse-sync
+  33%
+    -webkit-transform: translateY(10px)
+    transform: translateY(10px)
+
+  66%
+    -webkit-transform: translateY(-10px)
+    transform: translateY(-10px)
+
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
+@keyframes ball-pulse-sync
+  33%
+    -webkit-transform: translateY(10px)
+    transform: translateY(10px)
+
+  66%
+    -webkit-transform: translateY(-10px)
+    transform: translateY(-10px)
+
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
+.ball-pulse-sync > div
+  &:nth-child(0)
+    -webkit-animation: ball-pulse-sync 0.6s -0.21s infinite ease-in-out
+    animation: ball-pulse-sync 0.6s -0.21s infinite ease-in-out
+  &:nth-child(1)
+    -webkit-animation: ball-pulse-sync 0.6s -0.14s infinite ease-in-out
+    animation: ball-pulse-sync 0.6s -0.14s infinite ease-in-out
+  &:nth-child(2)
+    -webkit-animation: ball-pulse-sync 0.6s -0.07s infinite ease-in-out
+    animation: ball-pulse-sync 0.6s -0.07s infinite ease-in-out
+  &:nth-child(3)
+    -webkit-animation: ball-pulse-sync 0.6s 0s infinite ease-in-out
+    animation: ball-pulse-sync 0.6s 0s infinite ease-in-out
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+
+@-webkit-keyframes ball-scale
+  0%
+    -webkit-transform: scale(0)
+    transform: scale(0)
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0
+
+@keyframes ball-scale
+  0%
+    -webkit-transform: scale(0)
+    transform: scale(0)
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0
+
+.ball-scale > div
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  height: 60px
+  width: 60px
+  -webkit-animation: ball-scale 1s 0s ease-in-out infinite
+  animation: ball-scale 1s 0s ease-in-out infinite
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  height: 60px
+  width: 60px
+  -webkit-animation: ball-scale 1s 0s ease-in-out infinite
+  animation: ball-scale 1s 0s ease-in-out infinite
+
+@keyframes ball-scale
+  0%
+    -webkit-transform: scale(0)
+    transform: scale(0)
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0
+
+.ball-scale-random
+  width: 37px
+  height: 40px
+  > div
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    display: inline-block
+    height: 30px
+    width: 30px
+    -webkit-animation: ball-scale 1s 0s ease-in-out infinite
+    animation: ball-scale 1s 0s ease-in-out infinite
+    &:nth-child(1)
+      margin-left: -7px
+      -webkit-animation: ball-scale 1s 0.2s ease-in-out infinite
+      animation: ball-scale 1s 0.2s ease-in-out infinite
+    &:nth-child(3)
+      margin-left: -2px
+      margin-top: 9px
+      -webkit-animation: ball-scale 1s 0.5s ease-in-out infinite
+      animation: ball-scale 1s 0.5s ease-in-out infinite
+
+@-webkit-keyframes rotate
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  50%
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+@keyframes rotate
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  50%
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+.ball-rotate
+  position: relative
+  > div
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: relative
+    &:first-child
+      -webkit-animation: rotate 1s 0s cubic-bezier(0.7, -0.13, 0.22, 0.86) infinite
+      animation: rotate 1s 0s cubic-bezier(0.7, -0.13, 0.22, 0.86) infinite
+    &:before, &:after
+      background-color: #fff
+      width: 15px
+      height: 15px
+      border-radius: 100%
+      margin: 2px
+      content: ""
+      position: absolute
+      opacity: 0.8
+    &:before
+      top: 0px
+      left: -28px
+    &:after
+      top: 0px
+      left: 25px
+
+@keyframes rotate
+  0%
+    -webkit-transform: rotate(0deg) scale(1)
+    transform: rotate(0deg) scale(1)
+
+  50%
+    -webkit-transform: rotate(180deg) scale(0.6)
+    transform: rotate(180deg) scale(0.6)
+
+  100%
+    -webkit-transform: rotate(360deg) scale(1)
+    transform: rotate(360deg) scale(1)
+
+.ball-clip-rotate > div
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  border: 2px solid #fff
+  border-bottom-color: transparent
+  height: 25px
+  width: 25px
+  background: transparent !important
+  display: inline-block
+  -webkit-animation: rotate 0.75s 0s linear infinite
+  animation: rotate 0.75s 0s linear infinite
+
+@keyframes rotate
+  0%
+    -webkit-transform: rotate(0deg) scale(1)
+    transform: rotate(0deg) scale(1)
+
+  50%
+    -webkit-transform: rotate(180deg) scale(0.6)
+    transform: rotate(180deg) scale(0.6)
+
+  100%
+    -webkit-transform: rotate(360deg) scale(1)
+    transform: rotate(360deg) scale(1)
+
+@keyframes scale
+  30%
+    -webkit-transform: scale(0.3)
+    transform: scale(0.3)
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+.ball-clip-rotate-pulse
+  position: relative
+  -webkit-transform: translateY(-15px)
+  -ms-transform: translateY(-15px)
+  transform: translateY(-15px)
+  > div
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    top: 0px
+    left: 0px
+    border-radius: 100%
+    &:first-child
+      background: #fff
+      height: 16px
+      width: 16px
+      top: 7px
+      left: -7px
+      -webkit-animation: scale 1s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+      animation: scale 1s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+    &:last-child
+      position: absolute
+      border: 2px solid #fff
+      width: 30px
+      height: 30px
+      left: -16px
+      top: -2px
+      background: transparent
+      border: 2px solid
+      border-color: #fff transparent #fff transparent
+      -webkit-animation: rotate 1s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+      animation: rotate 1s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+      -webkit-animation-duration: 1s
+      animation-duration: 1s
+
+@keyframes rotate
+  0%
+    -webkit-transform: rotate(0deg) scale(1)
+    transform: rotate(0deg) scale(1)
+
+  50%
+    -webkit-transform: rotate(180deg) scale(0.6)
+    transform: rotate(180deg) scale(0.6)
+
+  100%
+    -webkit-transform: rotate(360deg) scale(1)
+    transform: rotate(360deg) scale(1)
+
+.ball-clip-rotate-multiple
+  position: relative
+  > div
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    left: -20px
+    top: -20px
+    border: 2px solid #fff
+    border-bottom-color: transparent
+    border-top-color: transparent
+    border-radius: 100%
+    height: 35px
+    width: 35px
+    -webkit-animation: rotate 1s 0s ease-in-out infinite
+    animation: rotate 1s 0s ease-in-out infinite
+    &:last-child
+      display: inline-block
+      top: -10px
+      left: -10px
+      width: 15px
+      height: 15px
+      -webkit-animation-duration: 0.5s
+      animation-duration: 0.5s
+      border-color: #fff transparent #fff transparent
+      -webkit-animation-direction: reverse
+      animation-direction: reverse
+
+@-webkit-keyframes ball-scale-ripple
+  0%
+    -webkit-transform: scale(0.1)
+    transform: scale(0.1)
+    opacity: 1
+
+  70%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0.7
+
+  100%
+    opacity: 0.0
+
+@keyframes ball-scale-ripple
+  0%
+    -webkit-transform: scale(0.1)
+    transform: scale(0.1)
+    opacity: 1
+
+  70%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0.7
+
+  100%
+    opacity: 0.0
+
+.ball-scale-ripple > div
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  height: 50px
+  width: 50px
+  border-radius: 100%
+  border: 2px solid #fff
+  -webkit-animation: ball-scale-ripple 1s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8)
+  animation: ball-scale-ripple 1s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8)
+
+@-webkit-keyframes ball-scale-ripple-multiple
+  0%
+    -webkit-transform: scale(0.1)
+    transform: scale(0.1)
+    opacity: 1
+
+  70%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0.7
+
+  100%
+    opacity: 0.0
+
+@keyframes ball-scale-ripple-multiple
+  0%
+    -webkit-transform: scale(0.1)
+    transform: scale(0.1)
+    opacity: 1
+
+  70%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0.7
+
+  100%
+    opacity: 0.0
+
+.ball-scale-ripple-multiple
+  position: relative
+  -webkit-transform: translateY(-25px)
+  -ms-transform: translateY(-25px)
+  transform: translateY(-25px)
+  > div
+    &:nth-child(0)
+      -webkit-animation-delay: -0.8s
+      animation-delay: -0.8s
+    &:nth-child(1)
+      -webkit-animation-delay: -0.6s
+      animation-delay: -0.6s
+    &:nth-child(2)
+      -webkit-animation-delay: -0.4s
+      animation-delay: -0.4s
+    &:nth-child(3)
+      -webkit-animation-delay: -0.2s
+      animation-delay: -0.2s
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    top: -2px
+    left: -26px
+    width: 50px
+    height: 50px
+    border-radius: 100%
+    border: 2px solid #fff
+    -webkit-animation: ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8)
+    animation: ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8)
+
+@-webkit-keyframes ball-beat
+  50%
+    opacity: 0.2
+    -webkit-transform: scale(0.75)
+    transform: scale(0.75)
+
+  100%
+    opacity: 1
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+@keyframes ball-beat
+  50%
+    opacity: 0.2
+    -webkit-transform: scale(0.75)
+    transform: scale(0.75)
+
+  100%
+    opacity: 1
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+.ball-beat > div
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  -webkit-animation: ball-beat 0.7s 0s infinite linear
+  animation: ball-beat 0.7s 0s infinite linear
+  &:nth-child(2n-1)
+    -webkit-animation-delay: -0.35s !important
+    animation-delay: -0.35s !important
+
+@-webkit-keyframes ball-scale-multiple
+  0%
+    -webkit-transform: scale(0)
+    transform: scale(0)
+    opacity: 0
+
+  5%
+    opacity: 1
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0
+
+@keyframes ball-scale-multiple
+  0%
+    -webkit-transform: scale(0)
+    transform: scale(0)
+    opacity: 0
+
+  5%
+    opacity: 1
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 0
+
+.ball-scale-multiple
+  position: relative
+  -webkit-transform: translateY(-30px)
+  -ms-transform: translateY(-30px)
+  transform: translateY(-30px)
+  > div
+    &:nth-child(2)
+      -webkit-animation-delay: -0.4s
+      animation-delay: -0.4s
+    &:nth-child(3)
+      -webkit-animation-delay: -0.2s
+      animation-delay: -0.2s
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    left: -30px
+    top: 0px
+    opacity: 0
+    margin: 0
+    width: 60px
+    height: 60px
+    -webkit-animation: ball-scale-multiple 1s 0s linear infinite
+    animation: ball-scale-multiple 1s 0s linear infinite
+
+@-webkit-keyframes ball-triangle-path-1
+  33%
+    -webkit-transform: translate(25px, -50px)
+    transform: translate(25px, -50px)
+
+  66%
+    -webkit-transform: translate(50px, 0px)
+    transform: translate(50px, 0px)
+
+  100%
+    -webkit-transform: translate(0px, 0px)
+    transform: translate(0px, 0px)
+
+@keyframes ball-triangle-path-1
+  33%
+    -webkit-transform: translate(25px, -50px)
+    transform: translate(25px, -50px)
+
+  66%
+    -webkit-transform: translate(50px, 0px)
+    transform: translate(50px, 0px)
+
+  100%
+    -webkit-transform: translate(0px, 0px)
+    transform: translate(0px, 0px)
+
+@-webkit-keyframes ball-triangle-path-2
+  33%
+    -webkit-transform: translate(25px, 50px)
+    transform: translate(25px, 50px)
+
+  66%
+    -webkit-transform: translate(-25px, 50px)
+    transform: translate(-25px, 50px)
+
+  100%
+    -webkit-transform: translate(0px, 0px)
+    transform: translate(0px, 0px)
+
+@keyframes ball-triangle-path-2
+  33%
+    -webkit-transform: translate(25px, 50px)
+    transform: translate(25px, 50px)
+
+  66%
+    -webkit-transform: translate(-25px, 50px)
+    transform: translate(-25px, 50px)
+
+  100%
+    -webkit-transform: translate(0px, 0px)
+    transform: translate(0px, 0px)
+
+@-webkit-keyframes ball-triangle-path-3
+  33%
+    -webkit-transform: translate(-50px, 0px)
+    transform: translate(-50px, 0px)
+
+  66%
+    -webkit-transform: translate(-25px, -50px)
+    transform: translate(-25px, -50px)
+
+  100%
+    -webkit-transform: translate(0px, 0px)
+    transform: translate(0px, 0px)
+
+@keyframes ball-triangle-path-3
+  33%
+    -webkit-transform: translate(-50px, 0px)
+    transform: translate(-50px, 0px)
+
+  66%
+    -webkit-transform: translate(-25px, -50px)
+    transform: translate(-25px, -50px)
+
+  100%
+    -webkit-transform: translate(0px, 0px)
+    transform: translate(0px, 0px)
+
+.ball-triangle-path
+  position: relative
+  -webkit-transform: translate(-29.994px, -37.50938px)
+  -ms-transform: translate(-29.994px, -37.50938px)
+  transform: translate(-29.994px, -37.50938px)
+  > div
+    &:nth-child(1)
+      -webkit-animation-name: ball-triangle-path-1
+      animation-name: ball-triangle-path-1
+      -webkit-animation-delay: 0
+      animation-delay: 0
+      -webkit-animation-duration: 2s
+      animation-duration: 2s
+      -webkit-animation-timing-function: ease-in-out
+      animation-timing-function: ease-in-out
+      -webkit-animation-iteration-count: infinite
+      animation-iteration-count: infinite
+    &:nth-child(2)
+      -webkit-animation-name: ball-triangle-path-2
+      animation-name: ball-triangle-path-2
+      -webkit-animation-delay: 0
+      animation-delay: 0
+      -webkit-animation-duration: 2s
+      animation-duration: 2s
+      -webkit-animation-timing-function: ease-in-out
+      animation-timing-function: ease-in-out
+      -webkit-animation-iteration-count: infinite
+      animation-iteration-count: infinite
+    &:nth-child(3)
+      -webkit-animation-name: ball-triangle-path-3
+      animation-name: ball-triangle-path-3
+      -webkit-animation-delay: 0
+      animation-delay: 0
+      -webkit-animation-duration: 2s
+      animation-duration: 2s
+      -webkit-animation-timing-function: ease-in-out
+      animation-timing-function: ease-in-out
+      -webkit-animation-iteration-count: infinite
+      animation-iteration-count: infinite
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    width: 10px
+    height: 10px
+    border-radius: 100%
+    border: 1px solid #fff
+    &:nth-of-type(1)
+      top: 50px
+    &:nth-of-type(2)
+      left: 25px
+    &:nth-of-type(3)
+      top: 50px
+      left: 50px
+
+@-webkit-keyframes ball-pulse-rise-even
+  0%
+    -webkit-transform: scale(1.1)
+    transform: scale(1.1)
+
+  25%
+    -webkit-transform: translateY(-30px)
+    transform: translateY(-30px)
+
+  50%
+    -webkit-transform: scale(0.4)
+    transform: scale(0.4)
+
+  75%
+    -webkit-transform: translateY(30px)
+    transform: translateY(30px)
+
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+@keyframes ball-pulse-rise-even
+  0%
+    -webkit-transform: scale(1.1)
+    transform: scale(1.1)
+
+  25%
+    -webkit-transform: translateY(-30px)
+    transform: translateY(-30px)
+
+  50%
+    -webkit-transform: scale(0.4)
+    transform: scale(0.4)
+
+  75%
+    -webkit-transform: translateY(30px)
+    transform: translateY(30px)
+
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+@-webkit-keyframes ball-pulse-rise-odd
+  0%
+    -webkit-transform: scale(0.4)
+    transform: scale(0.4)
+
+  25%
+    -webkit-transform: translateY(30px)
+    transform: translateY(30px)
+
+  50%
+    -webkit-transform: scale(1.1)
+    transform: scale(1.1)
+
+  75%
+    -webkit-transform: translateY(-30px)
+    transform: translateY(-30px)
+
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+    -webkit-transform: scale(0.75)
+    transform: scale(0.75)
+
+@keyframes ball-pulse-rise-odd
+  0%
+    -webkit-transform: scale(0.4)
+    transform: scale(0.4)
+
+  25%
+    -webkit-transform: translateY(30px)
+    transform: translateY(30px)
+
+  50%
+    -webkit-transform: scale(1.1)
+    transform: scale(1.1)
+
+  75%
+    -webkit-transform: translateY(-30px)
+    transform: translateY(-30px)
+
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+    -webkit-transform: scale(0.75)
+    transform: scale(0.75)
+
+.ball-pulse-rise > div
+  background-color: #fff
+  width: 15px
+  height: 15px
+  border-radius: 100%
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  -webkit-animation-duration: 1s
+  animation-duration: 1s
+  -webkit-animation-timing-function: cubic-bezier(0.15, 0.46, 0.9, 0.6)
+  animation-timing-function: cubic-bezier(0.15, 0.46, 0.9, 0.6)
+  -webkit-animation-iteration-count: infinite
+  animation-iteration-count: infinite
+  -webkit-animation-delay: 0
+  animation-delay: 0
+  &:nth-child(2n)
+    -webkit-animation-name: ball-pulse-rise-even
+    animation-name: ball-pulse-rise-even
+  &:nth-child(2n-1)
+    -webkit-animation-name: ball-pulse-rise-odd
+    animation-name: ball-pulse-rise-odd
+
+@-webkit-keyframes ball-grid-beat
+  50%
+    opacity: 0.7
+
+  100%
+    opacity: 1
+
+@keyframes ball-grid-beat
+  50%
+    opacity: 0.7
+
+  100%
+    opacity: 1
+
+.ball-grid-beat
+  width: 57px
+  > div
+    &:nth-child(1)
+      -webkit-animation-delay: 0.44s
+      animation-delay: 0.44s
+      -webkit-animation-duration: 1.27s
+      animation-duration: 1.27s
+    &:nth-child(2)
+      -webkit-animation-delay: 0.2s
+      animation-delay: 0.2s
+      -webkit-animation-duration: 1.52s
+      animation-duration: 1.52s
+    &:nth-child(3)
+      -webkit-animation-delay: 0.14s
+      animation-delay: 0.14s
+      -webkit-animation-duration: 0.61s
+      animation-duration: 0.61s
+    &:nth-child(4)
+      -webkit-animation-delay: 0.15s
+      animation-delay: 0.15s
+      -webkit-animation-duration: 0.82s
+      animation-duration: 0.82s
+    &:nth-child(5)
+      -webkit-animation-delay: -0.01s
+      animation-delay: -0.01s
+      -webkit-animation-duration: 1.24s
+      animation-duration: 1.24s
+    &:nth-child(6)
+      -webkit-animation-delay: -0.07s
+      animation-delay: -0.07s
+      -webkit-animation-duration: 1.35s
+      animation-duration: 1.35s
+    &:nth-child(7)
+      -webkit-animation-delay: 0.29s
+      animation-delay: 0.29s
+      -webkit-animation-duration: 1.44s
+      animation-duration: 1.44s
+    &:nth-child(8)
+      -webkit-animation-delay: 0.63s
+      animation-delay: 0.63s
+      -webkit-animation-duration: 1.19s
+      animation-duration: 1.19s
+    &:nth-child(9)
+      -webkit-animation-delay: -0.18s
+      animation-delay: -0.18s
+      -webkit-animation-duration: 1.48s
+      animation-duration: 1.48s
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    display: inline-block
+    float: left
+    -webkit-animation-name: ball-grid-beat
+    animation-name: ball-grid-beat
+    -webkit-animation-iteration-count: infinite
+    animation-iteration-count: infinite
+    -webkit-animation-delay: 0
+    animation-delay: 0
+
+@-webkit-keyframes ball-grid-pulse
+  0%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+  50%
+    -webkit-transform: scale(0.5)
+    transform: scale(0.5)
+    opacity: 0.7
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 1
+
+@keyframes ball-grid-pulse
+  0%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+  50%
+    -webkit-transform: scale(0.5)
+    transform: scale(0.5)
+    opacity: 0.7
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+    opacity: 1
+
+.ball-grid-pulse
+  width: 57px
+  > div
+    &:nth-child(1)
+      -webkit-animation-delay: 0.58s
+      animation-delay: 0.58s
+      -webkit-animation-duration: 0.9s
+      animation-duration: 0.9s
+    &:nth-child(2)
+      -webkit-animation-delay: 0.01s
+      animation-delay: 0.01s
+      -webkit-animation-duration: 0.94s
+      animation-duration: 0.94s
+    &:nth-child(3)
+      -webkit-animation-delay: 0.25s
+      animation-delay: 0.25s
+      -webkit-animation-duration: 1.43s
+      animation-duration: 1.43s
+    &:nth-child(4)
+      -webkit-animation-delay: -0.03s
+      animation-delay: -0.03s
+      -webkit-animation-duration: 0.74s
+      animation-duration: 0.74s
+    &:nth-child(5)
+      -webkit-animation-delay: 0.21s
+      animation-delay: 0.21s
+      -webkit-animation-duration: 0.68s
+      animation-duration: 0.68s
+    &:nth-child(6)
+      -webkit-animation-delay: 0.25s
+      animation-delay: 0.25s
+      -webkit-animation-duration: 1.17s
+      animation-duration: 1.17s
+    &:nth-child(7)
+      -webkit-animation-delay: 0.46s
+      animation-delay: 0.46s
+      -webkit-animation-duration: 1.41s
+      animation-duration: 1.41s
+    &:nth-child(8)
+      -webkit-animation-delay: 0.02s
+      animation-delay: 0.02s
+      -webkit-animation-duration: 1.56s
+      animation-duration: 1.56s
+    &:nth-child(9)
+      -webkit-animation-delay: 0.13s
+      animation-delay: 0.13s
+      -webkit-animation-duration: 0.78s
+      animation-duration: 0.78s
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    display: inline-block
+    float: left
+    -webkit-animation-name: ball-grid-pulse
+    animation-name: ball-grid-pulse
+    -webkit-animation-iteration-count: infinite
+    animation-iteration-count: infinite
+    -webkit-animation-delay: 0
+    animation-delay: 0
+
+@-webkit-keyframes ball-spin-fade-loader
+  50%
+    opacity: 0.3
+    -webkit-transform: scale(0.4)
+    transform: scale(0.4)
+
+  100%
+    opacity: 1
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+@keyframes ball-spin-fade-loader
+  50%
+    opacity: 0.3
+    -webkit-transform: scale(0.4)
+    transform: scale(0.4)
+
+  100%
+    opacity: 1
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+.ball-spin-fade-loader
+  position: relative
+  top: -10px
+  left: -10px
+  > div
+    &:nth-child(1)
+      top: 25px
+      left: 0
+      -webkit-animation: ball-spin-fade-loader 1s -0.96s infinite linear
+      animation: ball-spin-fade-loader 1s -0.96s infinite linear
+    &:nth-child(2)
+      top: 17.04545px
+      left: 17.04545px
+      -webkit-animation: ball-spin-fade-loader 1s -0.84s infinite linear
+      animation: ball-spin-fade-loader 1s -0.84s infinite linear
+    &:nth-child(3)
+      top: 0
+      left: 25px
+      -webkit-animation: ball-spin-fade-loader 1s -0.72s infinite linear
+      animation: ball-spin-fade-loader 1s -0.72s infinite linear
+    &:nth-child(4)
+      top: -17.04545px
+      left: 17.04545px
+      -webkit-animation: ball-spin-fade-loader 1s -0.6s infinite linear
+      animation: ball-spin-fade-loader 1s -0.6s infinite linear
+    &:nth-child(5)
+      top: -25px
+      left: 0
+      -webkit-animation: ball-spin-fade-loader 1s -0.48s infinite linear
+      animation: ball-spin-fade-loader 1s -0.48s infinite linear
+    &:nth-child(6)
+      top: -17.04545px
+      left: -17.04545px
+      -webkit-animation: ball-spin-fade-loader 1s -0.36s infinite linear
+      animation: ball-spin-fade-loader 1s -0.36s infinite linear
+    &:nth-child(7)
+      top: 0
+      left: -25px
+      -webkit-animation: ball-spin-fade-loader 1s -0.24s infinite linear
+      animation: ball-spin-fade-loader 1s -0.24s infinite linear
+    &:nth-child(8)
+      top: 17.04545px
+      left: -17.04545px
+      -webkit-animation: ball-spin-fade-loader 1s -0.12s infinite linear
+      animation: ball-spin-fade-loader 1s -0.12s infinite linear
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+
+@-webkit-keyframes ball-spin-loader
+  75%
+    opacity: 0.2
+
+  100%
+    opacity: 1
+
+@keyframes ball-spin-loader
+  75%
+    opacity: 0.2
+
+  100%
+    opacity: 1
+
+.ball-spin-loader
+  position: relative
+  >
+    span
+      &:nth-child(1)
+        top: 45px
+        left: 0
+        -webkit-animation: ball-spin-loader 2s 0.9s infinite linear
+        animation: ball-spin-loader 2s 0.9s infinite linear
+      &:nth-child(2)
+        top: 30.68182px
+        left: 30.68182px
+        -webkit-animation: ball-spin-loader 2s 1.8s infinite linear
+        animation: ball-spin-loader 2s 1.8s infinite linear
+      &:nth-child(3)
+        top: 0
+        left: 45px
+        -webkit-animation: ball-spin-loader 2s 2.7s infinite linear
+        animation: ball-spin-loader 2s 2.7s infinite linear
+      &:nth-child(4)
+        top: -30.68182px
+        left: 30.68182px
+        -webkit-animation: ball-spin-loader 2s 3.6s infinite linear
+        animation: ball-spin-loader 2s 3.6s infinite linear
+      &:nth-child(5)
+        top: -45px
+        left: 0
+        -webkit-animation: ball-spin-loader 2s 4.5s infinite linear
+        animation: ball-spin-loader 2s 4.5s infinite linear
+      &:nth-child(6)
+        top: -30.68182px
+        left: -30.68182px
+        -webkit-animation: ball-spin-loader 2s 5.4s infinite linear
+        animation: ball-spin-loader 2s 5.4s infinite linear
+      &:nth-child(7)
+        top: 0
+        left: -45px
+        -webkit-animation: ball-spin-loader 2s 6.3s infinite linear
+        animation: ball-spin-loader 2s 6.3s infinite linear
+      &:nth-child(8)
+        top: 30.68182px
+        left: -30.68182px
+        -webkit-animation: ball-spin-loader 2s 7.2s infinite linear
+        animation: ball-spin-loader 2s 7.2s infinite linear
+    div
+      -webkit-animation-fill-mode: both
+      animation-fill-mode: both
+      position: absolute
+      width: 15px
+      height: 15px
+      border-radius: 100%
+      background: green
+
+@-webkit-keyframes ball-zig
+  33%
+    -webkit-transform: translate(-15px, -30px)
+    transform: translate(-15px, -30px)
+
+  66%
+    -webkit-transform: translate(15px, -30px)
+    transform: translate(15px, -30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+@keyframes ball-zig
+  33%
+    -webkit-transform: translate(-15px, -30px)
+    transform: translate(-15px, -30px)
+
+  66%
+    -webkit-transform: translate(15px, -30px)
+    transform: translate(15px, -30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+@-webkit-keyframes ball-zag
+  33%
+    -webkit-transform: translate(15px, 30px)
+    transform: translate(15px, 30px)
+
+  66%
+    -webkit-transform: translate(-15px, 30px)
+    transform: translate(-15px, 30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+@keyframes ball-zag
+  33%
+    -webkit-transform: translate(15px, 30px)
+    transform: translate(15px, 30px)
+
+  66%
+    -webkit-transform: translate(-15px, 30px)
+    transform: translate(-15px, 30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+.ball-zig-zag
+  position: relative
+  -webkit-transform: translate(-15px, -15px)
+  -ms-transform: translate(-15px, -15px)
+  transform: translate(-15px, -15px)
+  > div
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    margin-left: 15px
+    top: 4px
+    left: -7px
+    &:first-child
+      -webkit-animation: ball-zig 0.7s 0s infinite linear
+      animation: ball-zig 0.7s 0s infinite linear
+    &:last-child
+      -webkit-animation: ball-zag 0.7s 0s infinite linear
+      animation: ball-zag 0.7s 0s infinite linear
+
+@-webkit-keyframes ball-zig-deflect
+  17%
+    -webkit-transform: translate(-15px, -30px)
+    transform: translate(-15px, -30px)
+
+  34%
+    -webkit-transform: translate(15px, -30px)
+    transform: translate(15px, -30px)
+
+  50%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+  67%
+    -webkit-transform: translate(15px, -30px)
+    transform: translate(15px, -30px)
+
+  84%
+    -webkit-transform: translate(-15px, -30px)
+    transform: translate(-15px, -30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+@keyframes ball-zig-deflect
+  17%
+    -webkit-transform: translate(-15px, -30px)
+    transform: translate(-15px, -30px)
+
+  34%
+    -webkit-transform: translate(15px, -30px)
+    transform: translate(15px, -30px)
+
+  50%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+  67%
+    -webkit-transform: translate(15px, -30px)
+    transform: translate(15px, -30px)
+
+  84%
+    -webkit-transform: translate(-15px, -30px)
+    transform: translate(-15px, -30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+@-webkit-keyframes ball-zag-deflect
+  17%
+    -webkit-transform: translate(15px, 30px)
+    transform: translate(15px, 30px)
+
+  34%
+    -webkit-transform: translate(-15px, 30px)
+    transform: translate(-15px, 30px)
+
+  50%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+  67%
+    -webkit-transform: translate(-15px, 30px)
+    transform: translate(-15px, 30px)
+
+  84%
+    -webkit-transform: translate(15px, 30px)
+    transform: translate(15px, 30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+@keyframes ball-zag-deflect
+  17%
+    -webkit-transform: translate(15px, 30px)
+    transform: translate(15px, 30px)
+
+  34%
+    -webkit-transform: translate(-15px, 30px)
+    transform: translate(-15px, 30px)
+
+  50%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+  67%
+    -webkit-transform: translate(-15px, 30px)
+    transform: translate(-15px, 30px)
+
+  84%
+    -webkit-transform: translate(15px, 30px)
+    transform: translate(15px, 30px)
+
+  100%
+    -webkit-transform: translate(0, 0)
+    transform: translate(0, 0)
+
+.ball-zig-zag-deflect
+  position: relative
+  -webkit-transform: translate(-15px, -15px)
+  -ms-transform: translate(-15px, -15px)
+  transform: translate(-15px, -15px)
+  > div
+    background-color: #fff
+    width: 15px
+    height: 15px
+    border-radius: 100%
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    margin-left: 15px
+    top: 4px
+    left: -7px
+    &:first-child
+      -webkit-animation: ball-zig-deflect 1.5s 0s infinite linear
+      animation: ball-zig-deflect 1.5s 0s infinite linear
+    &:last-child
+      -webkit-animation: ball-zag-deflect 1.5s 0s infinite linear
+      animation: ball-zag-deflect 1.5s 0s infinite linear
+
+@-webkit-keyframes line-scale
+  0%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+  50%
+    -webkit-transform: scaley(0.4)
+    transform: scaley(0.4)
+
+  100%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+@keyframes line-scale
+  0%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+  50%
+    -webkit-transform: scaley(0.4)
+    transform: scaley(0.4)
+
+  100%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+.line-scale > div
+  &:nth-child(1)
+    -webkit-animation: line-scale 1s -0.4s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: line-scale 1s -0.4s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(2)
+    -webkit-animation: line-scale 1s -0.3s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: line-scale 1s -0.3s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(3)
+    -webkit-animation: line-scale 1s -0.2s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: line-scale 1s -0.2s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(4)
+    -webkit-animation: line-scale 1s -0.1s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: line-scale 1s -0.1s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  &:nth-child(5)
+    -webkit-animation: line-scale 1s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+    animation: line-scale 1s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)
+  background-color: #fff
+  width: 4px
+  height: 35px
+  border-radius: 2px
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+
+@-webkit-keyframes line-scale-party
+  0%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+  50%
+    -webkit-transform: scale(0.5)
+    transform: scale(0.5)
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+@keyframes line-scale-party
+  0%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+  50%
+    -webkit-transform: scale(0.5)
+    transform: scale(0.5)
+
+  100%
+    -webkit-transform: scale(1)
+    transform: scale(1)
+
+.line-scale-party > div
+  &:nth-child(1)
+    -webkit-animation-delay: -0.09s
+    animation-delay: -0.09s
+    -webkit-animation-duration: 0.83s
+    animation-duration: 0.83s
+  &:nth-child(2)
+    -webkit-animation-delay: 0.33s
+    animation-delay: 0.33s
+    -webkit-animation-duration: 0.64s
+    animation-duration: 0.64s
+  &:nth-child(3)
+    -webkit-animation-delay: 0.32s
+    animation-delay: 0.32s
+    -webkit-animation-duration: 0.39s
+    animation-duration: 0.39s
+  &:nth-child(4)
+    -webkit-animation-delay: 0.47s
+    animation-delay: 0.47s
+    -webkit-animation-duration: 0.52s
+    animation-duration: 0.52s
+  background-color: #fff
+  width: 4px
+  height: 35px
+  border-radius: 2px
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  -webkit-animation-name: line-scale-party
+  animation-name: line-scale-party
+  -webkit-animation-iteration-count: infinite
+  animation-iteration-count: infinite
+  -webkit-animation-delay: 0
+  animation-delay: 0
+
+@-webkit-keyframes line-scale-pulse-out
+  0%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+  50%
+    -webkit-transform: scaley(0.4)
+    transform: scaley(0.4)
+
+  100%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+@keyframes line-scale-pulse-out
+  0%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+  50%
+    -webkit-transform: scaley(0.4)
+    transform: scaley(0.4)
+
+  100%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+.line-scale-pulse-out > div
+  background-color: #fff
+  width: 4px
+  height: 35px
+  border-radius: 2px
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  -webkit-animation: line-scale-pulse-out 0.9s -0.6s infinite cubic-bezier(0.85, 0.25, 0.37, 0.85)
+  animation: line-scale-pulse-out 0.9s -0.6s infinite cubic-bezier(0.85, 0.25, 0.37, 0.85)
+  &:nth-child(2), &:nth-child(4)
+    -webkit-animation-delay: -0.4s !important
+    animation-delay: -0.4s !important
+  &:nth-child(1), &:nth-child(5)
+    -webkit-animation-delay: -0.2s !important
+    animation-delay: -0.2s !important
+
+@-webkit-keyframes line-scale-pulse-out-rapid
+  0%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+  80%
+    -webkit-transform: scaley(0.3)
+    transform: scaley(0.3)
+
+  90%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+@keyframes line-scale-pulse-out-rapid
+  0%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+  80%
+    -webkit-transform: scaley(0.3)
+    transform: scaley(0.3)
+
+  90%
+    -webkit-transform: scaley(1)
+    transform: scaley(1)
+
+.line-scale-pulse-out-rapid > div
+  background-color: #fff
+  width: 4px
+  height: 35px
+  border-radius: 2px
+  margin: 2px
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  display: inline-block
+  -webkit-animation: line-scale-pulse-out-rapid 0.9s -0.5s infinite cubic-bezier(0.11, 0.49, 0.38, 0.78)
+  animation: line-scale-pulse-out-rapid 0.9s -0.5s infinite cubic-bezier(0.11, 0.49, 0.38, 0.78)
+  &:nth-child(2), &:nth-child(4)
+    -webkit-animation-delay: -0.25s !important
+    animation-delay: -0.25s !important
+  &:nth-child(1), &:nth-child(5)
+    -webkit-animation-delay: 0s !important
+    animation-delay: 0s !important
+
+@-webkit-keyframes line-spin-fade-loader
+  50%
+    opacity: 0.3
+
+  100%
+    opacity: 1
+
+@keyframes line-spin-fade-loader
+  50%
+    opacity: 0.3
+
+  100%
+    opacity: 1
+
+.line-spin-fade-loader
+  position: relative
+  top: -10px
+  left: -4px
+  > div
+    &:nth-child(1)
+      top: 20px
+      left: 0
+      -webkit-animation: line-spin-fade-loader 1.2s -0.84s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.84s infinite ease-in-out
+    &:nth-child(2)
+      top: 13.63636px
+      left: 13.63636px
+      -webkit-transform: rotate(-45deg)
+      -ms-transform: rotate(-45deg)
+      transform: rotate(-45deg)
+      -webkit-animation: line-spin-fade-loader 1.2s -0.72s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.72s infinite ease-in-out
+    &:nth-child(3)
+      top: 0
+      left: 20px
+      -webkit-transform: rotate(90deg)
+      -ms-transform: rotate(90deg)
+      transform: rotate(90deg)
+      -webkit-animation: line-spin-fade-loader 1.2s -0.6s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.6s infinite ease-in-out
+    &:nth-child(4)
+      top: -13.63636px
+      left: 13.63636px
+      -webkit-transform: rotate(45deg)
+      -ms-transform: rotate(45deg)
+      transform: rotate(45deg)
+      -webkit-animation: line-spin-fade-loader 1.2s -0.48s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.48s infinite ease-in-out
+    &:nth-child(5)
+      top: -20px
+      left: 0
+      -webkit-animation: line-spin-fade-loader 1.2s -0.36s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.36s infinite ease-in-out
+    &:nth-child(6)
+      top: -13.63636px
+      left: -13.63636px
+      -webkit-transform: rotate(-45deg)
+      -ms-transform: rotate(-45deg)
+      transform: rotate(-45deg)
+      -webkit-animation: line-spin-fade-loader 1.2s -0.24s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.24s infinite ease-in-out
+    &:nth-child(7)
+      top: 0
+      left: -20px
+      -webkit-transform: rotate(90deg)
+      -ms-transform: rotate(90deg)
+      transform: rotate(90deg)
+      -webkit-animation: line-spin-fade-loader 1.2s -0.12s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s -0.12s infinite ease-in-out
+    &:nth-child(8)
+      top: 13.63636px
+      left: -13.63636px
+      -webkit-transform: rotate(45deg)
+      -ms-transform: rotate(45deg)
+      transform: rotate(45deg)
+      -webkit-animation: line-spin-fade-loader 1.2s 0s infinite ease-in-out
+      animation: line-spin-fade-loader 1.2s 0s infinite ease-in-out
+    background-color: #fff
+    width: 4px
+    height: 35px
+    border-radius: 2px
+    margin: 2px
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    position: absolute
+    width: 5px
+    height: 15px
+
+@-webkit-keyframes triangle-skew-spin
+  25%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(0)
+    transform: perspective(100px) rotateX(180deg) rotateY(0)
+
+  50%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+    transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+
+  75%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(180deg)
+    transform: perspective(100px) rotateX(0) rotateY(180deg)
+
+  100%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(0)
+    transform: perspective(100px) rotateX(0) rotateY(0)
+
+@keyframes triangle-skew-spin
+  25%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(0)
+    transform: perspective(100px) rotateX(180deg) rotateY(0)
+
+  50%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+    transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+
+  75%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(180deg)
+    transform: perspective(100px) rotateX(0) rotateY(180deg)
+
+  100%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(0)
+    transform: perspective(100px) rotateX(0) rotateY(0)
+
+.triangle-skew-spin > div
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  width: 0
+  height: 0
+  border-left: 20px solid transparent
+  border-right: 20px solid transparent
+  border-bottom: 20px solid #fff
+  -webkit-animation: triangle-skew-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+  animation: triangle-skew-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+
+@-webkit-keyframes square-spin
+  25%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(0)
+    transform: perspective(100px) rotateX(180deg) rotateY(0)
+
+  50%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+    transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+
+  75%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(180deg)
+    transform: perspective(100px) rotateX(0) rotateY(180deg)
+
+  100%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(0)
+    transform: perspective(100px) rotateX(0) rotateY(0)
+
+@keyframes square-spin
+  25%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(0)
+    transform: perspective(100px) rotateX(180deg) rotateY(0)
+
+  50%
+    -webkit-transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+    transform: perspective(100px) rotateX(180deg) rotateY(180deg)
+
+  75%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(180deg)
+    transform: perspective(100px) rotateX(0) rotateY(180deg)
+
+  100%
+    -webkit-transform: perspective(100px) rotateX(0) rotateY(0)
+    transform: perspective(100px) rotateX(0) rotateY(0)
+
+.square-spin > div
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  width: 50px
+  height: 50px
+  background: #fff
+  border: 1px solid red
+  -webkit-animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+  animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite
+
+@-webkit-keyframes rotate_pacman_half_up
+  0%
+    -webkit-transform: rotate(270deg)
+    transform: rotate(270deg)
+
+  50%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+  100%
+    -webkit-transform: rotate(270deg)
+    transform: rotate(270deg)
+
+@keyframes rotate_pacman_half_up
+  0%
+    -webkit-transform: rotate(270deg)
+    transform: rotate(270deg)
+
+  50%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+  100%
+    -webkit-transform: rotate(270deg)
+    transform: rotate(270deg)
+
+@-webkit-keyframes rotate_pacman_half_down
+  0%
+    -webkit-transform: rotate(90deg)
+    transform: rotate(90deg)
+
+  50%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  100%
+    -webkit-transform: rotate(90deg)
+    transform: rotate(90deg)
+
+@keyframes rotate_pacman_half_down
+  0%
+    -webkit-transform: rotate(90deg)
+    transform: rotate(90deg)
+
+  50%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  100%
+    -webkit-transform: rotate(90deg)
+    transform: rotate(90deg)
+
+@-webkit-keyframes pacman-balls
+  75%
+    opacity: 0.7
+
+  100%
+    -webkit-transform: translate(-100px, -6.25px)
+    transform: translate(-100px, -6.25px)
+
+@keyframes pacman-balls
+  75%
+    opacity: 0.7
+
+  100%
+    -webkit-transform: translate(-100px, -6.25px)
+    transform: translate(-100px, -6.25px)
+
+.pacman
+  position: relative
+  > div
+    &:nth-child(2)
+      -webkit-animation: pacman-balls 1s -0.99s infinite linear
+      animation: pacman-balls 1s -0.99s infinite linear
+    &:nth-child(3)
+      -webkit-animation: pacman-balls 1s -0.66s infinite linear
+      animation: pacman-balls 1s -0.66s infinite linear
+    &:nth-child(4)
+      -webkit-animation: pacman-balls 1s -0.33s infinite linear
+      animation: pacman-balls 1s -0.33s infinite linear
+    &:nth-child(5)
+      -webkit-animation: pacman-balls 1s 0s infinite linear
+      animation: pacman-balls 1s 0s infinite linear
+    &:first-of-type
+      width: 0px
+      height: 0px
+      border-right: 25px solid transparent
+      border-top: 25px solid #fff
+      border-left: 25px solid #fff
+      border-bottom: 25px solid #fff
+      border-radius: 25px
+      -webkit-animation: rotate_pacman_half_up 0.5s 0s infinite
+      animation: rotate_pacman_half_up 0.5s 0s infinite
+      position: relative
+      left: -30px
+    &:nth-child(2)
+      width: 0px
+      height: 0px
+      border-right: 25px solid transparent
+      border-top: 25px solid #fff
+      border-left: 25px solid #fff
+      border-bottom: 25px solid #fff
+      border-radius: 25px
+      -webkit-animation: rotate_pacman_half_down 0.5s 0s infinite
+      animation: rotate_pacman_half_down 0.5s 0s infinite
+      margin-top: -50px
+      position: relative
+      left: -30px
+    &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(6)
+      background-color: #fff
+      width: 15px
+      height: 15px
+      border-radius: 100%
+      margin: 2px
+      width: 10px
+      height: 10px
+      position: absolute
+      -webkit-transform: translate(0, -6.25px)
+      -ms-transform: translate(0, -6.25px)
+      transform: translate(0, -6.25px)
+      top: 25px
+      left: 70px
+
+@-webkit-keyframes cube-transition
+  25%
+    -webkit-transform: translateX(50px) scale(0.5) rotate(-90deg)
+    transform: translateX(50px) scale(0.5) rotate(-90deg)
+
+  50%
+    -webkit-transform: translate(50px, 50px) rotate(-180deg)
+    transform: translate(50px, 50px) rotate(-180deg)
+
+  75%
+    -webkit-transform: translateY(50px) scale(0.5) rotate(-270deg)
+    transform: translateY(50px) scale(0.5) rotate(-270deg)
+
+  100%
+    -webkit-transform: rotate(-360deg)
+    transform: rotate(-360deg)
+
+@keyframes cube-transition
+  25%
+    -webkit-transform: translateX(50px) scale(0.5) rotate(-90deg)
+    transform: translateX(50px) scale(0.5) rotate(-90deg)
+
+  50%
+    -webkit-transform: translate(50px, 50px) rotate(-180deg)
+    transform: translate(50px, 50px) rotate(-180deg)
+
+  75%
+    -webkit-transform: translateY(50px) scale(0.5) rotate(-270deg)
+    transform: translateY(50px) scale(0.5) rotate(-270deg)
+
+  100%
+    -webkit-transform: rotate(-360deg)
+    transform: rotate(-360deg)
+
+.cube-transition
+  position: relative
+  -webkit-transform: translate(-25px, -25px)
+  -ms-transform: translate(-25px, -25px)
+  transform: translate(-25px, -25px)
+  > div
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
+    width: 10px
+    height: 10px
+    position: absolute
+    top: -5px
+    left: -5px
+    background-color: #fff
+    -webkit-animation: cube-transition 1.6s 0s infinite ease-in-out
+    animation: cube-transition 1.6s 0s infinite ease-in-out
+    &:last-child
+      -webkit-animation-delay: -0.8s
+      animation-delay: -0.8s
+
+@-webkit-keyframes spin-rotate
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  50%
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+@keyframes spin-rotate
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  50%
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+.semi-circle-spin
+  position: relative
+  width: 35px
+  height: 35px
+  overflow: hidden
+  > div
+    position: absolute
+    border-width: 0px
+    border-radius: 100%
+    -webkit-animation: spin-rotate 0.6s 0s infinite linear
+    animation: spin-rotate 0.6s 0s infinite linear
+    background-image: -webkit-linear-gradient(transparent 0%, transparent 70%, #fff 30%, #fff 100%)
+    background-image: linear-gradient(transparent 0%, transparent 70%, #fff 30%, #fff 100%)
+    width: 100%
+    height: 100%
+
+@-webkit-keyframes bar-progress
+  0%
+    -webkit-transform: scaleY(20%)
+    transform: scaleY(20%)
+    opacity: 1
+
+  25%
+    -webkit-transform: translateX(6%) scaleY(10%)
+    transform: translateX(6%) scaleY(10%)
+    opacity: 0.7
+
+  50%
+    -webkit-transform: translateX(20%) scaleY(20%)
+    transform: translateX(20%) scaleY(20%)
+    opacity: 1
+
+  75%
+    -webkit-transform: translateX(6%) scaleY(10%)
+    transform: translateX(6%) scaleY(10%)
+    opacity: 0.7
+
+  100%
+    -webkit-transform: scaleY(20%)
+    transform: scaleY(20%)
+    opacity: 1
+
+@keyframes bar-progress
+  0%
+    -webkit-transform: scaleY(20%)
+    transform: scaleY(20%)
+    opacity: 1
+
+  25%
+    -webkit-transform: translateX(6%) scaleY(10%)
+    transform: translateX(6%) scaleY(10%)
+    opacity: 0.7
+
+  50%
+    -webkit-transform: translateX(20%) scaleY(20%)
+    transform: translateX(20%) scaleY(20%)
+    opacity: 1
+
+  75%
+    -webkit-transform: translateX(6%) scaleY(10%)
+    transform: translateX(6%) scaleY(10%)
+    opacity: 0.7
+
+  100%
+    -webkit-transform: scaleY(20%)
+    transform: scaleY(20%)
+    opacity: 1
+
+.bar-progress
+  width: 30%
+  height: 12px
+  > div
+    position: relative
+    width: 20%
+    height: 12px
+    border-radius: 10px
+    background-color: #fff
+    -webkit-animation: bar-progress 3s cubic-bezier(0.57, 0.1, 0.44, 0.93) infinite
+    animation: bar-progress 3s cubic-bezier(0.57, 0.1, 0.44, 0.93) infinite
+    opacity: 1
+
+@-webkit-keyframes bar-swing
+  0%
+    left: 0
+
+  50%
+    left: 70%
+
+  100%
+    left: 0
+
+@keyframes bar-swing
+  0%
+    left: 0
+
+  50%
+    left: 70%
+
+  100%
+    left: 0
+
+.bar-swing
+  width: 30%
+  height: 8px
+  > div
+    position: relative
+    width: 30%
+    height: 8px
+    border-radius: 10px
+    background-color: #fff
+    -webkit-animation: bar-swing 1.5s infinite
+    animation: bar-swing 1.5s infinite
+
+@-webkit-keyframes bar-swing-container
+  0%
+    left: 0
+    -webkit-transform: translateX(0)
+    transform: translateX(0)
+
+  50%
+    left: 70%
+    -webkit-transform: translateX(-4px)
+    transform: translateX(-4px)
+
+  100%
+    left: 0
+    -webkit-transform: translateX(0)
+    transform: translateX(0)
+
+@keyframes bar-swing-container
+  0%
+    left: 0
+    -webkit-transform: translateX(0)
+    transform: translateX(0)
+
+  50%
+    left: 70%
+    -webkit-transform: translateX(-4px)
+    transform: translateX(-4px)
+
+  100%
+    left: 0
+    -webkit-transform: translateX(0)
+    transform: translateX(0)
+
+.bar-swing-container
+  width: 20%
+  height: 8px
+  position: relative
+  div
+    &:nth-child(1)
+      position: absolute
+      width: 100%
+      background-color: rgba(255, 255, 255, 0.2)
+      height: 12px
+      border-radius: 10px
+    &:nth-child(2)
+      position: absolute
+      width: 30%
+      height: 8px
+      border-radius: 10px
+      background-color: #fff
+      -webkit-animation: bar-swing-container 2s cubic-bezier(0.91, 0.35, 0.12, 0.6) infinite
+      animation: bar-swing-container 2s cubic-bezier(0.91, 0.35, 0.12, 0.6) infinite
+      margin: 2px 2px 0
+
+body.stop-scrolling
+  height: 100%
+  overflow: hidden
+
+.sweet-overlay
+  background-color: black
+
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"
+
+  background-color: rgba(0, 0, 0, 0.4)
+  position: fixed
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  display: none
+  z-index: 10000
+
+.sweet-alert
+  background-color: white
+  width: 478px
+  padding: 17px
+  border-radius: 5px
+  text-align: center
+  position: fixed
+  left: 50%
+  top: 50%
+  margin-left: -256px
+  margin-top: -200px
+  overflow: hidden
+  display: none
+  z-index: 99999
+  h2
+    color: #575757
+    font-size: 30px
+    text-align: center
+    font-weight: 600
+    text-transform: none
+    position: relative
+    margin: 25px 0
+    padding: 0
+    line-height: 40px
+    display: block
+  p
+    color: #797979
+    font-size: 16px
+    text-align: center
+    font-weight: 300
+    position: relative
+    text-align: inherit
+    float: none
+    margin: 0
+    padding: 0
+    line-height: normal
+  fieldset
+    border: none
+    position: relative
+  .sa-error-container
+    background-color: #f1f1f1
+    margin-left: -17px
+    margin-right: -17px
+    overflow: hidden
+    padding: 0 10px
+    max-height: 0
+    webkit-transition: padding 0.15s, max-height 0.15s
+    transition: padding 0.15s, max-height 0.15s
+    &.show
+      padding: 10px 0
+      max-height: 100px
+      webkit-transition: padding 0.2s, max-height 0.2s
+      transition: padding 0.25s, max-height 0.25s
+    .icon
+      display: inline-block
+      width: 24px
+      height: 24px
+      border-radius: 50%
+      background-color: #ea7d7d
+      color: white
+      line-height: 24px
+      text-align: center
+      margin-right: 3px
+    p
+      display: inline-block
+  .sa-input-error
+    position: absolute
+    top: 29px
+    right: 26px
+    width: 20px
+    height: 20px
+    opacity: 0
+    -webkit-transform: scale(0.5)
+    transform: scale(0.5)
+    -webkit-transform-origin: 50% 50%
+    transform-origin: 50% 50%
+    -webkit-transition: all 0.1s
+    transition: all 0.1s
+    &::before, &::after
+      content: ""
+      width: 20px
+      height: 6px
+      background-color: #f06e57
+      border-radius: 3px
+      position: absolute
+      top: 50%
+      margin-top: -4px
+      left: 50%
+      margin-left: -9px
+    &::before
+      -webkit-transform: rotate(-45deg)
+      transform: rotate(-45deg)
+    &::after
+      -webkit-transform: rotate(45deg)
+      transform: rotate(45deg)
+    &.show
+      opacity: 1
+      -webkit-transform: scale(1)
+      transform: scale(1)
+  input
+    width: 100%
+    box-sizing: border-box
+    border-radius: 3px
+    border: 1px solid #d7d7d7
+    height: 43px
+    margin-top: 10px
+    margin-bottom: 17px
+    font-size: 18px
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.06)
+    padding: 0 12px
+    display: none
+    -webkit-transition: all 0.3s
+    transition: all 0.3s
+    &:focus
+      outline: none
+      box-shadow: 0px 0px 3px #c4e6f5
+      border: 1px solid #b4dbed
+      &::-moz-placeholder, &:-ms-input-placeholder, &::-webkit-input-placeholder
+        transition: opacity 0.3s 0.03s ease
+        opacity: 0.5
+    &::-moz-placeholder, &:-ms-input-placeholder, &::-webkit-input-placeholder
+      color: #bdbdbd
+  &.show-input input
+    display: block
+  .sa-confirm-button-container
+    display: inline-block
+    position: relative
+  .la-ball-fall
+    position: absolute
+    left: 50%
+    top: 50%
+    margin-left: -27px
+    margin-top: 4px
+    opacity: 0
+    visibility: hidden
+  button
+    background-color: #8CD4F5
+    color: white
+    border: none
+    box-shadow: none
+    font-size: 17px
+    font-weight: 500
+    -webkit-border-radius: 4px
+    border-radius: 5px
+    padding: 10px 32px
+    margin: 26px 5px 0 5px
+    cursor: pointer
+    &:focus
+      outline: none
+      box-shadow: 0 0 2px rgba(128, 179, 235, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.05)
+    &:hover
+      background-color: #7ecff4
+    &:active
+      background-color: #5dc2f1
+    &.cancel
+      background-color: #C1C1C1
+      &:hover
+        background-color: #b9b9b9
+      &:active
+        background-color: #a8a8a8
+      &:focus
+        box-shadow: rgba(197, 205, 211, 0.8) 0px 0px 2px, rgba(0, 0, 0, 0.04706) 0px 0px 0px 1px inset !important
+    &[disabled]
+      opacity: .6
+      cursor: default
+    &.confirm[disabled]
+      color: transparent
+      ~ .la-ball-fall
+        opacity: 1
+        visibility: visible
+        transition-delay: 0s
+    &::-moz-focus-inner
+      border: 0
+  &[data-has-cancel-button=false] button
+    box-shadow: none !important
+  &[data-has-confirm-button=false][data-has-cancel-button=false]
+    padding-bottom: 40px
+  .sa-icon
+    width: 80px
+    height: 80px
+    border: 4px solid gray
+    -webkit-border-radius: 40px
+    border-radius: 40px
+    border-radius: 50%
+    margin: 20px auto
+    padding: 0
+    position: relative
+    box-sizing: content-box
+    &.sa-error
+      border-color: #F27474
+      .sa-x-mark
+        position: relative
+        display: block
+      .sa-line
+        position: absolute
+        height: 5px
+        width: 47px
+        background-color: #F27474
+        display: block
+        top: 37px
+        border-radius: 2px
+        &.sa-left
+          -webkit-transform: rotate(45deg)
+          transform: rotate(45deg)
+          left: 17px
+        &.sa-right
+          -webkit-transform: rotate(-45deg)
+          transform: rotate(-45deg)
+          right: 16px
+    &.sa-warning
+      border-color: #F8BB86
+      .sa-body
+        position: absolute
+        width: 5px
+        height: 47px
+        left: 50%
+        top: 10px
+        -webkit-border-radius: 2px
+        border-radius: 2px
+        margin-left: -2px
+        background-color: #F8BB86
+      .sa-dot
+        position: absolute
+        width: 7px
+        height: 7px
+        -webkit-border-radius: 50%
+        border-radius: 50%
+        margin-left: -3px
+        left: 50%
+        bottom: 10px
+        background-color: #F8BB86
+    &.sa-info
+      border-color: #C9DAE1
+      &::before
+        content: ""
+        position: absolute
+        width: 5px
+        height: 29px
+        left: 50%
+        bottom: 17px
+        border-radius: 2px
+        margin-left: -2px
+        background-color: #C9DAE1
+      &::after
+        content: ""
+        position: absolute
+        width: 7px
+        height: 7px
+        border-radius: 50%
+        margin-left: -3px
+        top: 19px
+        background-color: #C9DAE1
+    &.sa-success
+      border-color: #A5DC86
+      &::before, &::after
+        content: ''
+        -webkit-border-radius: 40px
+        border-radius: 40px
+        border-radius: 50%
+        position: absolute
+        width: 60px
+        height: 120px
+        background: white
+        -webkit-transform: rotate(45deg)
+        transform: rotate(45deg)
+      &::before
+        -webkit-border-radius: 120px 0 0 120px
+        border-radius: 120px 0 0 120px
+        top: -7px
+        left: -33px
+        -webkit-transform: rotate(-45deg)
+        transform: rotate(-45deg)
+        -webkit-transform-origin: 60px 60px
+        transform-origin: 60px 60px
+      &::after
+        -webkit-border-radius: 0 120px 120px 0
+        border-radius: 0 120px 120px 0
+        top: -11px
+        left: 30px
+        -webkit-transform: rotate(-45deg)
+        transform: rotate(-45deg)
+        -webkit-transform-origin: 0px 60px
+        transform-origin: 0px 60px
+      .sa-placeholder
+        width: 80px
+        height: 80px
+        border: 4px solid rgba(165, 220, 134, 0.2)
+        -webkit-border-radius: 40px
+        border-radius: 40px
+        border-radius: 50%
+        box-sizing: content-box
+        position: absolute
+        left: -4px
+        top: -4px
+        z-index: 2
+      .sa-fix
+        width: 5px
+        height: 90px
+        background-color: white
+        position: absolute
+        left: 28px
+        top: 8px
+        z-index: 1
+        -webkit-transform: rotate(-45deg)
+        transform: rotate(-45deg)
+      .sa-line
+        height: 5px
+        background-color: #A5DC86
+        display: block
+        border-radius: 2px
+        position: absolute
+        z-index: 2
+        &.sa-tip
+          width: 25px
+          left: 14px
+          top: 46px
+          -webkit-transform: rotate(45deg)
+          transform: rotate(45deg)
+        &.sa-long
+          width: 47px
+          right: 8px
+          top: 38px
+          -webkit-transform: rotate(-45deg)
+          transform: rotate(-45deg)
+    &.sa-custom
+      background-size: contain
+      border-radius: 0
+      border: none
+      background-position: center center
+      background-repeat: no-repeat
+
+@media all and (max-width: 540px)
+  .sweet-alert
+    width: auto
+    margin-left: 0
+    margin-right: 0
+    left: 15px
+    right: 15px
+
+/*
+ * Animations
+@-webkit-keyframes showSweetAlert
+  0%
+    transform: scale(0.7)
+    -webkit-transform: scale(0.7)
+
+  45%
+    transform: scale(1.05)
+    -webkit-transform: scale(1.05)
+
+  80%
+    transform: scale(0.95)
+    -webkit-transform: scale(0.95)
+
+  100%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+@keyframes showSweetAlert
+  0%
+    transform: scale(0.7)
+    -webkit-transform: scale(0.7)
+
+  45%
+    transform: scale(1.05)
+    -webkit-transform: scale(1.05)
+
+  80%
+    transform: scale(0.95)
+    -webkit-transform: scale(0.95)
+
+  100%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+@-webkit-keyframes hideSweetAlert
+  0%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+  100%
+    transform: scale(0.5)
+    -webkit-transform: scale(0.5)
+
+@keyframes hideSweetAlert
+  0%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+  100%
+    transform: scale(0.5)
+    -webkit-transform: scale(0.5)
+
+@-webkit-keyframes slideFromTop
+  0%
+    top: 0%
+
+  100%
+    top: 50%
+
+@keyframes slideFromTop
+  0%
+    top: 0%
+
+  100%
+    top: 50%
+
+@-webkit-keyframes slideToTop
+  0%
+    top: 50%
+
+  100%
+    top: 0%
+
+@keyframes slideToTop
+  0%
+    top: 50%
+
+  100%
+    top: 0%
+
+@-webkit-keyframes slideFromBottom
+  0%
+    top: 70%
+
+  100%
+    top: 50%
+
+@keyframes slideFromBottom
+  0%
+    top: 70%
+
+  100%
+    top: 50%
+
+@-webkit-keyframes slideToBottom
+  0%
+    top: 50%
+
+  100%
+    top: 70%
+
+@keyframes slideToBottom
+  0%
+    top: 50%
+
+  100%
+    top: 70%
+
+.showSweetAlert
+  &[data-animation=pop]
+    -webkit-animation: showSweetAlert 0.3s
+    animation: showSweetAlert 0.3s
+  &[data-animation=none]
+    -webkit-animation: none
+    animation: none
+  &[data-animation=slide-from-top]
+    -webkit-animation: slideFromTop 0.3s
+    animation: slideFromTop 0.3s
+  &[data-animation=slide-from-bottom]
+    -webkit-animation: slideFromBottom 0.3s
+    animation: slideFromBottom 0.3s
+
+.hideSweetAlert
+  &[data-animation=pop]
+    -webkit-animation: hideSweetAlert 0.2s
+    animation: hideSweetAlert 0.2s
+  &[data-animation=none]
+    -webkit-animation: none
+    animation: none
+  &[data-animation=slide-from-top]
+    -webkit-animation: slideToTop 0.4s
+    animation: slideToTop 0.4s
+  &[data-animation=slide-from-bottom]
+    -webkit-animation: slideToBottom 0.3s
+    animation: slideToBottom 0.3s
+
+@-webkit-keyframes animateSuccessTip
+  0%
+    width: 0
+    left: 1px
+    top: 19px
+
+  54%
+    width: 0
+    left: 1px
+    top: 19px
+
+  70%
+    width: 50px
+    left: -8px
+    top: 37px
+
+  84%
+    width: 17px
+    left: 21px
+    top: 48px
+
+  100%
+    width: 25px
+    left: 14px
+    top: 45px
+
+@keyframes animateSuccessTip
+  0%
+    width: 0
+    left: 1px
+    top: 19px
+
+  54%
+    width: 0
+    left: 1px
+    top: 19px
+
+  70%
+    width: 50px
+    left: -8px
+    top: 37px
+
+  84%
+    width: 17px
+    left: 21px
+    top: 48px
+
+  100%
+    width: 25px
+    left: 14px
+    top: 45px
+
+@-webkit-keyframes animateSuccessLong
+  0%
+    width: 0
+    right: 46px
+    top: 54px
+
+  65%
+    width: 0
+    right: 46px
+    top: 54px
+
+  84%
+    width: 55px
+    right: 0px
+    top: 35px
+
+  100%
+    width: 47px
+    right: 8px
+    top: 38px
+
+@keyframes animateSuccessLong
+  0%
+    width: 0
+    right: 46px
+    top: 54px
+
+  65%
+    width: 0
+    right: 46px
+    top: 54px
+
+  84%
+    width: 55px
+    right: 0px
+    top: 35px
+
+  100%
+    width: 47px
+    right: 8px
+    top: 38px
+
+@-webkit-keyframes rotatePlaceholder
+  0%
+    transform: rotate(-45deg)
+    -webkit-transform: rotate(-45deg)
+
+  5%
+    transform: rotate(-45deg)
+    -webkit-transform: rotate(-45deg)
+
+  12%
+    transform: rotate(-405deg)
+    -webkit-transform: rotate(-405deg)
+
+  100%
+    transform: rotate(-405deg)
+    -webkit-transform: rotate(-405deg)
+
+@keyframes rotatePlaceholder
+  0%
+    transform: rotate(-45deg)
+    -webkit-transform: rotate(-45deg)
+
+  5%
+    transform: rotate(-45deg)
+    -webkit-transform: rotate(-45deg)
+
+  12%
+    transform: rotate(-405deg)
+    -webkit-transform: rotate(-405deg)
+
+  100%
+    transform: rotate(-405deg)
+    -webkit-transform: rotate(-405deg)
+
+.animateSuccessTip
+  -webkit-animation: animateSuccessTip 0.75s
+  animation: animateSuccessTip 0.75s
+
+.animateSuccessLong
+  -webkit-animation: animateSuccessLong 0.75s
+  animation: animateSuccessLong 0.75s
+
+.sa-icon.sa-success.animate::after
+  -webkit-animation: rotatePlaceholder 4.25s ease-in
+  animation: rotatePlaceholder 4.25s ease-in
+
+@-webkit-keyframes animateErrorIcon
+  0%
+    transform: rotateX(100deg)
+    -webkit-transform: rotateX(100deg)
+    opacity: 0
+
+  100%
+    transform: rotateX(0deg)
+    -webkit-transform: rotateX(0deg)
+    opacity: 1
+
+@keyframes animateErrorIcon
+  0%
+    transform: rotateX(100deg)
+    -webkit-transform: rotateX(100deg)
+    opacity: 0
+
+  100%
+    transform: rotateX(0deg)
+    -webkit-transform: rotateX(0deg)
+    opacity: 1
+
+.animateErrorIcon
+  -webkit-animation: animateErrorIcon 0.5s
+  animation: animateErrorIcon 0.5s
+
+@-webkit-keyframes animateXMark
+  0%
+    transform: scale(0.4)
+    -webkit-transform: scale(0.4)
+    margin-top: 26px
+    opacity: 0
+
+  50%
+    transform: scale(0.4)
+    -webkit-transform: scale(0.4)
+    margin-top: 26px
+    opacity: 0
+
+  80%
+    transform: scale(1.15)
+    -webkit-transform: scale(1.15)
+    margin-top: -6px
+
+  100%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+    margin-top: 0
+    opacity: 1
+
+@keyframes animateXMark
+  0%
+    transform: scale(0.4)
+    -webkit-transform: scale(0.4)
+    margin-top: 26px
+    opacity: 0
+
+  50%
+    transform: scale(0.4)
+    -webkit-transform: scale(0.4)
+    margin-top: 26px
+    opacity: 0
+
+  80%
+    transform: scale(1.15)
+    -webkit-transform: scale(1.15)
+    margin-top: -6px
+
+  100%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+    margin-top: 0
+    opacity: 1
+
+.animateXMark
+  -webkit-animation: animateXMark 0.5s
+  animation: animateXMark 0.5s
+
+@-webkit-keyframes pulseWarning
+  0%
+    border-color: #F8D486
+
+  100%
+    border-color: #F8BB86
+
+@keyframes pulseWarning
+  0%
+    border-color: #F8D486
+
+  100%
+    border-color: #F8BB86
+
+.pulseWarning
+  -webkit-animation: pulseWarning 0.75s infinite alternate
+  animation: pulseWarning 0.75s infinite alternate
+
+@-webkit-keyframes pulseWarningIns
+  0%
+    background-color: #F8D486
+
+  100%
+    background-color: #F8BB86
+
+@keyframes pulseWarningIns
+  0%
+    background-color: #F8D486
+
+  100%
+    background-color: #F8BB86
+
+.pulseWarningIns
+  -webkit-animation: pulseWarningIns 0.75s infinite alternate
+  animation: pulseWarningIns 0.75s infinite alternate
+
+@-webkit-keyframes rotate-loading
+  0%
+    transform: rotate(0deg)
+
+  100%
+    transform: rotate(360deg)
+
+@keyframes rotate-loading
+  0%
+    transform: rotate(0deg)
+
+  100%
+    transform: rotate(360deg)
+
+
+.sweet-alert .sa-icon
+  &.sa-error .sa-line
+    &.sa-left
+      -ms-transform: rotate(45deg) \9
+    &.sa-right
+      -ms-transform: rotate(-45deg) \9
+  &.sa-success
+    border-color: transparent\9
+    .sa-line
+      &.sa-tip
+        -ms-transform: rotate(45deg) \9
+      &.sa-long
+        -ms-transform: rotate(-45deg) \9
+
+
+/*!
+ * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+ * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+ * Licensed under MIT
+
+.la-ball-fall
+  position: relative
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+  > div
+    position: relative
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+  display: block
+  font-size: 0
+  color: #fff
+  &.la-dark
+    color: #333
+  > div
+    display: inline-block
+    float: none
+    background-color: currentColor
+    border: 0 solid currentColor
+    width: 10px
+    height: 10px
+    margin: 4px
+    border-radius: 100%
+    opacity: 0
+    -webkit-animation: ball-fall 1s ease-in-out infinite
+    -moz-animation: ball-fall 1s ease-in-out infinite
+    -o-animation: ball-fall 1s ease-in-out infinite
+    animation: ball-fall 1s ease-in-out infinite
+    &:nth-child(1)
+      -webkit-animation-delay: -200ms
+      -moz-animation-delay: -200ms
+      -o-animation-delay: -200ms
+      animation-delay: -200ms
+    &:nth-child(2)
+      -webkit-animation-delay: -100ms
+      -moz-animation-delay: -100ms
+      -o-animation-delay: -100ms
+      animation-delay: -100ms
+    &:nth-child(3)
+      -webkit-animation-delay: 0ms
+      -moz-animation-delay: 0ms
+      -o-animation-delay: 0ms
+      animation-delay: 0ms
+  width: 54px
+  height: 18px
+  &.la-sm
+    width: 26px
+    height: 8px
+    > div
+      width: 4px
+      height: 4px
+      margin: 2px
+  &.la-2x
+    width: 108px
+    height: 36px
+    > div
+      width: 20px
+      height: 20px
+      margin: 8px
+  &.la-3x
+    width: 162px
+    height: 54px
+    > div
+      width: 30px
+      height: 30px
+      margin: 12px
+
+/*
+ * Animation
+@-webkit-keyframes ball-fall
+  0%
+    opacity: 0
+    -webkit-transform: translateY(-145%)
+    transform: translateY(-145%)
+
+  10%
+    opacity: .5
+
+  20%
+    opacity: 1
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
+  80%
+    opacity: 1
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
+  90%
+    opacity: .5
+
+  100%
+    opacity: 0
+    -webkit-transform: translateY(145%)
+    transform: translateY(145%)
+
+@-moz-keyframes ball-fall
+  0%
+    opacity: 0
+    -moz-transform: translateY(-145%)
+    transform: translateY(-145%)
+
+  10%
+    opacity: .5
+
+  20%
+    opacity: 1
+    -moz-transform: translateY(0)
+    transform: translateY(0)
+
+  80%
+    opacity: 1
+    -moz-transform: translateY(0)
+    transform: translateY(0)
+
+  90%
+    opacity: .5
+
+  100%
+    opacity: 0
+    -moz-transform: translateY(145%)
+    transform: translateY(145%)
+
+@-o-keyframes ball-fall
+  0%
+    opacity: 0
+    -o-transform: translateY(-145%)
+    transform: translateY(-145%)
+
+  10%
+    opacity: .5
+
+  20%
+    opacity: 1
+    -o-transform: translateY(0)
+    transform: translateY(0)
+
+  80%
+    opacity: 1
+    -o-transform: translateY(0)
+    transform: translateY(0)
+
+  90%
+    opacity: .5
+
+  100%
+    opacity: 0
+    -o-transform: translateY(145%)
+    transform: translateY(145%)
+
+@keyframes ball-fall
+  0%
+    opacity: 0
+    -webkit-transform: translateY(-145%)
+    -moz-transform: translateY(-145%)
+    -o-transform: translateY(-145%)
+    transform: translateY(-145%)
+
+  10%
+    opacity: .5
+
+  20%
+    opacity: 1
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -o-transform: translateY(0)
+    transform: translateY(0)
+
+  80%
+    opacity: 1
+    -webkit-transform: translateY(0)
+    -moz-transform: translateY(0)
+    -o-transform: translateY(0)
+    transform: translateY(0)
+
+  90%
+    opacity: .5
+
+  100%
+    opacity: 0
+    -webkit-transform: translateY(145%)
+    -moz-transform: translateY(145%)
+    -o-transform: translateY(145%)
+    transform: translateY(145%)
