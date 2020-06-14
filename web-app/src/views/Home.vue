@@ -63,6 +63,7 @@ export default {
   },
   destroyed () {
     clearInterval(this.messageAnimation)
+    window.removeEventListener('resize', this.onWindowResize)
   },
   methods: {
     animateMessage () {
@@ -148,7 +149,7 @@ export default {
         Globe.rotation.set(0, r, 0)
         requestAnimationFrame(animate)
       }
-    window.addEventListener('resize', this.onWindowResize)
+      window.addEventListener('resize', this.onWindowResize)
       animate()
     },
     onWindowResize () {

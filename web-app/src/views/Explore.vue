@@ -110,7 +110,7 @@ export default {
       } else {
         let index = this.getStories.indexOf(this.getCurrentStory)
         index++
-        if (index > this.getStories.length - 1) {
+        if (index >= this.getStories.length - 1) {
           index = 0
         }
         this.setCurrentStory(this.getStories[index])

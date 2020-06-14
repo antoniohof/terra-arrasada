@@ -24,15 +24,15 @@
             raised
             tile
             elevation="12"
-            max-width="280"
-            width="266"
+            max-width="380"
+            width="330"
             class="mx-auto p-5"
           >
             <v-list-item>
               <!-- <v-list-item-avatar color="grey"></v-list-item-avatar> -->
               <v-list-item-content>
                 <v-list-item-title class="headline">{{ story.title }}</v-list-item-title>
-                <v-list-item-subtitle>Antonio</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ story.author }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
 
@@ -295,6 +295,7 @@ export default {
         ]
       }
       this.save(entity)
+      this.$router.push('/explore')
     },
     layerInfo (id) {
       return {
@@ -344,7 +345,7 @@ export default {
         return
       }
       this.mapbox.flyTo({
-        center: [this.getCenterLayer(story)[0], this.getCenterLayer(story)[1] + 5],
+        center: [this.getCenterLayer(story)[0], this.getCenterLayer(story)[1] - (10 - story.zoom)/6],
         essential: true,
         zoom: story.zoom ? story.zoom : 4
       })
@@ -362,6 +363,22 @@ export default {
 </script>
 
 <style lang='sass'>
+.mapboxgl-popup-tip
+  width: 0
+  padding-top: 5px
+  height: 100px !important
+  border: 1px solid black !important
+  z-index: 1
+
+.mapboxgl-popup-content
+  background: $white-1
+  padding: 0px !important
+  height: fit-content
+
+.mapboxgl-popup-close-button
+  color: $white-1 !important
+  font-size: 144% !important
+
 .marker
   height: 15px !important
   width: 15px
@@ -380,6 +397,7 @@ export default {
   transform: translateX(100px) !important
   opacity: 0 !important
 </style>
+
 
 <style lang='sass' scoped>
 .calculation-box

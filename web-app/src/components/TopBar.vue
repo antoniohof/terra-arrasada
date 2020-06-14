@@ -16,7 +16,7 @@
           v-if='!isAuthenticated'
           @click="$router.push('/register')"
           class="controls_btn"
-          :class="{ 'controls_btn--selected': $route.path === '/login' }"
+          :class="{ 'controls_btn--selected': $route.path === '/register' }"
         >Register</div>
         <v-btn
           class="ml-9 align-self-center"

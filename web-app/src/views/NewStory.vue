@@ -79,13 +79,16 @@
   </v-col>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'newstory',
   components: {
   },
   computed: {
+    ...mapGetters('auth', [
+      'getUser'
+    ])
   },
   data: () => ({
     valid: true,
@@ -119,8 +122,7 @@ export default {
 
   methods: {
     ...mapActions('auth', [
-      'login',
-      'getUser'
+      'login'
     ]),
     ...mapActions('story', [
       'storeCreatingStory'
@@ -128,7 +130,7 @@ export default {
     submit () {
       let entity = {
         title: this.title,
-        description: this.descriptionRules,
+        description: this.description,
         date: 1545096864,
         thumbnail: '',
         zoom: 0,
