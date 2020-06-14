@@ -1,5 +1,5 @@
 <template>
-  <header class="topbar" v-if="getMeta">
+  <header class="topbar">
     <div class="wrap">
       <a class="wrap_back" v-if="getMeta.back" @click="goBack">
         <img src="static/icons/backarrow-icon.svg" />
@@ -13,10 +13,23 @@
           >Create</div>
         -->
         <div
-          @click="$router.push('/login')"
+          v-if='!isAuthenticated'
+          @click="$router.push('/register')"
           class="controls_btn"
           :class="{ 'controls_btn--selected': $route.path === '/login' }"
-        >Login</div>
+        >Register</div>
+        <v-btn
+          class="ml-9 align-self-center"
+          small
+          dark
+          v-if="isAuthenticated"
+          :loading="logginout"
+          tile
+          color="black"
+          @click="submitLogout"
+        >
+          Logout
+        </v-btn>
         <div
           @click="$router.push('/explore')"
           class="controls_btn"
@@ -51,11 +64,12 @@ export default {
   },
   data () {
     return {
+      logginout: false
     }
   },
   computed: {
-    ...mapGetters([
-      'isModalOpen'
+    ...mapGetters('auth', [
+      'isAuthenticated'
     ]),
     getMeta () {
       if (this.$route.meta.top) {
@@ -68,11 +82,20 @@ export default {
     }
   },
   methods: {
+    submitLogout () {
+      this.logginout = true
+      this.logout().then(() => {
+        this.logginout = false
+      })
+    },
     goBack: function () {
       this.$router.push(-1)
     },
     ...mapActions('map', [
       'fetchCurrentPosition'
+    ]),
+    ...mapActions('auth', [
+      'logout'
     ])
   },
   watch: {
@@ -83,17 +106,14 @@ export default {
 <style lang="sass" scoped>
 .topbar
   position: fixed
-  width: 100%
-  padding-right: 20px
-  padding-left: 20px
-  background: white
+  width: 90%
+  background: $white-1
   z-index: 10
   height: 50px
   .wrap
     justify-content: space-between
     display: flex
     flex-direction: row
-    width: 100%
     &_logo
       text-decoration: line-through !important
       font-weight: 1000

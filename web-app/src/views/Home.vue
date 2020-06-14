@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import * as THREE from 'three';
 import ThreeGlobe from 'three-globe';
 // import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
@@ -50,7 +50,7 @@ export default {
         'Wild Animal Trafficking',
         'Toxic Waste',
         'Aquifer Contamination',
-        'Greenhouse Gas Emission'
+        'Greenhouse Gas Emissions'
       ],
       currentMessages: [],
       messageAnimation: null,
@@ -68,17 +68,14 @@ export default {
     animateMessage () {
       console.log("created animation")
       this.messageAnimation = setInterval(() => {
-        let newMessage = this.messages[Math.floor(Math.random() * this.messages.length)]
-        let newMessage2 = this.messages[Math.floor(Math.random() * this.messages.length)]
-        while(this.currentMessages.indexOf(newMessage) !== -1) {
-          newMessage = this.messages[Math.floor(Math.random() * this.messages.length)]
+        let index = this.messages.indexOf(this.currentMessages[0])
+        index++
+        if (index > this.messages.length - 1) {
+          index = 0
         }
-        while(this.currentMessages.indexOf(newMessage2) !== -1 || newMessage2 === newMessage) {
-          newMessage2 = this.messages[Math.floor(Math.random() * this.messages.length)]
-        }
+        let newMessage = this.messages[index]
         this.currentMessages = []
         this.currentMessages.push(newMessage)
-        this.currentMessages.push(newMessage2)
       }, 2000)
     },
     async setupScene () {
@@ -115,8 +112,9 @@ export default {
       })
 
       // Setup renderer
+      const width = document.querySelector('#globe').clientWidth
       const renderer = this.renderer = new THREE.WebGLRenderer()
-      renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.setSize(width, window.innerHeight)
       document.getElementById('globe').appendChild(renderer.domElement)
 
       // Setup scene
@@ -128,7 +126,7 @@ export default {
 
       // Setup camera
       const camera = this.camera = new THREE.PerspectiveCamera()
-      camera.aspect = window.innerWidth/window.innerHeight
+      camera.aspect = (width)/window.innerHeight
       camera.updateProjectionMatrix()
       camera.position.z = 500
 
@@ -155,9 +153,10 @@ export default {
     },
     onWindowResize () {
       console.log('resize')
-      this.camera.aspect = window.innerWidth / window.innerHeight
+      const width = document.querySelector('#globe').clientWidth
+      this.camera.aspect = width/ window.innerHeight
       this.camera.updateProjectionMatrix()
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.setSize(width, window.innerHeight)
     },
     ...mapActions('map', [
       'fetchUserPosition'
@@ -165,7 +164,10 @@ export default {
   }
 }
 </script>
-
+<style lang='sass'>
+canvas
+  width: 100% !important
+</style>
 <style lang='sass' scoped>
 .home
   &_globe
@@ -180,7 +182,7 @@ export default {
     width: 400px
     height: 100px
     left: 50%
-    top: 50%
+    top: calc(50% - 50px)
     -webkit-transform: translate(-50%, 0)
     transform: translate(-50%, 0)
     cursor: pointer

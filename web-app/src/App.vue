@@ -1,12 +1,24 @@
 <template>
-  <div id="app">
+<v-app id="app">
+  <!--
+  <v-navigation-drawer app>
+  </v-navigation-drawer>
+  -->
+
+  <v-app-bar v-if="$route.meta.top.show" app>
     <TopBar></TopBar>
-    <router-view class="view" :class="{ 'margintop': $route.meta.top.show}"></router-view>
-    <!--
-    <Footer>
-    </Footer>
-    -->
-  </div>
+  </v-app-bar>
+
+  <v-main>
+    <v-container fluid fill-height>
+      <router-view class="view"></router-view>
+    </v-container>
+  </v-main>
+
+  <v-footer app>
+    <!-- -->
+  </v-footer>
+</v-app>
 </template>
 
 <script>
@@ -26,6 +38,7 @@ export default {
   },
   created () {
     console.log('app created')
+    this.checkAuthentication()
   },
   mounted () {
     this.fetchStories()
@@ -38,6 +51,10 @@ export default {
     ...mapActions('story',
     [
       'fetchStories'
+    ]),
+    ...mapActions('auth',
+    [
+      'checkAuthentication'
     ])
   },
   watch: {
@@ -61,10 +78,7 @@ export default {
   overflow-x: hidden
   .view
     width: 100%
-    height: 100vh
-  .margintop
-    margin-top: 50px
-    height: calc(100vh - 50px) !important
+    height: 100%
 
 #nav
   padding: 30px

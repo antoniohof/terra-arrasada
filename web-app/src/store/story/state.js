@@ -1,6 +1,7 @@
 const state = {
   story: {
-    list: []
+    list: [],
+    creating: null
   }
 }
 

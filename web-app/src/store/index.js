@@ -4,6 +4,7 @@ import modal from './modal'
 import map from './map'
 import story from './story'
 import explore from './explore'
+import auth from './auth'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     modal,
     map,
     story,
-    explore
+    explore,
+    auth
   }
 })

@@ -1,6 +1,5 @@
 const mutations = {
   set_animation: (state, animation) => {
-    console.log("MUTATION ANIMATING TRUE")
     state.explore.animation = animation
   },
   set_no_animation: (state) => {

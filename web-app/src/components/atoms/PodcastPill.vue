@@ -1,9 +1,14 @@
 <template>
   <div class="pill">
-    <div class="pill_line"></div>
+    <div class="pill_line" />
     <div class="pill_info">
-      <h3 class="pill_info_title">{{ story.title }}</h3>
-      <a class="pill_info_description" @click="showStory">{{story.description}}</a>
+      <h3 class="pill_info_title">
+        {{ story.title }}
+      </h3>
+      <a
+        class="pill_info_description"
+        @click="showStory"
+      >{{ story.description }}</a>
     </div>
   </div>
 </template>
@@ -12,7 +17,8 @@
 export default {
   props: {
     story: {
-      type: Object
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -20,14 +26,14 @@ export default {
       ready: false
     }
   },
+  mounted () {
+  },
+  updated () {
+  },
   methods: {
     showStory () {
       this.$router.push('/stories/' + this.story.id)
     }
-  },
-  mounted () {
-  },
-  updated () {
   }
 }
 </script>
@@ -40,12 +46,12 @@ export default {
   z-index: 1
 
 .mapboxgl-popup-content
-  background: white
+  background: $white-1
   padding: 1px !important
   height: fit-content
 
 .mapboxgl-popup-close-button
-  color: white !important
+  color: $white-1 !important
   font-size: 144% !important
 </style>
 <style lang="sass" scoped>
@@ -53,8 +59,6 @@ export default {
   background: transparent
   height: auto
   min-height: 30px
-  &_line
-
   &_info
     width: 200px
     height: auto

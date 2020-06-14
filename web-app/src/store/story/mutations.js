@@ -7,6 +7,9 @@ const mutations = {
     console.log('story tracks:', value)
     state.story.list.find((story) => story.id === parseInt(value.id)).tracks = value.tracks
     console.log(state.story.list)
+  },
+  store_creating_story: (state, value) => {
+    state.story.creating = value
   }
 }
 

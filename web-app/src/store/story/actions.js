@@ -63,6 +63,9 @@ const actions = {
       }).catch((e) => {
         return e
       })
+  },
+  storeCreatingStory: ({ commit }, story) => {
+    commit('store_creating_story', story)
   }
 }
 

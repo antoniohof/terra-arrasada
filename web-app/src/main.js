@@ -4,11 +4,13 @@ import router from './router'
 import store from './store/index'
 import './registerServiceWorker'
 import firebase from 'firebase'
+import vuetify from './plugins/vuetify';
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
 
@@ -31,14 +33,6 @@ export const db = firebase.firestore()
 
 // storage
 export const storage = firebase.storage().ref();
-
-// console.log('storage', storage)
-console.log('db', db)
-/*
-db.collection("users").onSnapshot(() => {
-  console.warn('snapshotFIRST!')
-})
-*/
 
 if (firebase.messaging.isSupported()) {
   console.warn('messaging supported!')

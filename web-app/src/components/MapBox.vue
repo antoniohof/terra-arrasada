@@ -10,13 +10,55 @@
       @dragend="onCenterChanged"
     >
       <MglMarker
+        @click="onClickedStory(story)"
         v-for="(story, index) in storiesAdded"
         :key="index"
         :coordinates="getCenterLayer(story)"
       >
         <div :id="'marker_' + story.id" slot="marker" class="marker" />
-        <MglPopup>
-          <PodcastPill :story="story"></PodcastPill>
+        <MglPopup
+          v-if="getCurrentStory && getCurrentStory.id === story.id"
+        >
+          <!--<PodcastPill :story="story"></PodcastPill>-->
+          <v-card
+            raised
+            tile
+            elevation="12"
+            max-width="280"
+            width="266"
+            class="mx-auto p-5"
+          >
+            <v-list-item>
+              <!-- <v-list-item-avatar color="grey"></v-list-item-avatar> -->
+              <v-list-item-content>
+                <v-list-item-title class="headline">{{ story.title }}</v-list-item-title>
+                <v-list-item-subtitle>Antonio</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-img
+              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+              height="194"
+            ></v-img>
+
+            <v-card-text>
+              {{ story.description }}
+            </v-card-text>
+
+            <v-card-actions>
+              <v-btn
+                text
+                dark
+                color="black accent-4"
+              >
+                Read More
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn icon>
+                <v-icon>mdi-share-variant</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </MglPopup>
       </MglMarker>
       <MglGeojsonLayer
@@ -28,8 +70,8 @@
         @click="onClickedStory(story)"
       ></MglGeojsonLayer>
     </MglMap>
-    <div class="calculation-box">
-      <p>Draw a polygon using the draw tools.</p>
+    <div v-if="creatingStory" class="calculation-box">
+      <p>Use the draw tool on the top left to mark the area of the incident</p>
       <div id="calculated-area"></div>
     </div>
   </div>
@@ -39,18 +81,27 @@ var MapboxDraw = require('@mapbox/mapbox-gl-draw');
 import { mapGetters, mapActions } from 'vuex'
 import { MglMap, MglGeojsonLayer, MglPopup, MglMarker  } from "vue-mapbox";
 import {
-  PodcastPill
+  // PodcastPill
 } from '@/components/atoms'
 export default {
   components: {
     MglMap,
     MglGeojsonLayer,
     MglPopup,
-    MglMarker,
-    PodcastPill
+    MglMarker
+    // PodcastPill
   },
   props: {
-    stories: Array
+    stories: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    creatingStory: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
   beforeMount () {
     this.initialCenter = [this.getLastLocation.lng, this.getLastLocation.lat]
@@ -67,7 +118,8 @@ export default {
       lastSelected: -1,
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       currentDraw: null,
-      storiesAdded: []
+      storiesAdded: [],
+      lastClickedID: null
     }
   },
   computed: {
@@ -77,6 +129,9 @@ export default {
     ...mapGetters('explore', [
       'getIsAnimating',
       'getCurrentStory'
+    ]),
+    ...mapGetters('story', [
+      'getCreatingStory'
     ])
   },
   methods: {
@@ -90,34 +145,38 @@ export default {
 
       console.log("map loaded")
 
+      /*
       this.mapbox.loadImage('/images/blood.png', (err, img) => {
         if (err) {
           console.error(err)
         }
         this.mapbox.addImage('pattern', img)
       })
-
-      // add all the stories to the map
-      await this.stories.length > 0
-      this.stories.forEach(story => {
-        this.addToMap(story)
-      })
+      */
 
 
       // add draw controls
       // draw mode
-      this.currentDraw = new MapboxDraw({
-      displayControlsDefault: false,
-      controls: {
-          polygon: true,
-          trash: true
-      }
-      });
-      this.mapbox.addControl(this.currentDraw);
+      if (this.creatingStory) {
+        this.currentDraw = new MapboxDraw({
+        displayControlsDefault: false,
+        controls: {
+            polygon: true,
+            trash: true
+        }
+        });
+        this.mapbox.addControl(this.currentDraw);
 
-      this.mapbox.on('draw.create', this.updateDrawArea);
-      // this.mapbox.on('draw.delete', this.updateDrawArea);
-      // this.mapbox.on('draw.update', this.updateDrawArea);
+        this.mapbox.on('draw.create', this.updateDrawArea);
+        // this.mapbox.on('draw.delete', this.updateDrawArea);
+        // this.mapbox.on('draw.update', this.updateDrawArea);
+      } else {
+        // add all the stories to the map
+        await this.stories.length > 0
+        this.stories.forEach(story => {
+          this.addToMap(story)
+        })
+      }
 
       this.$emit('loaded')
     },
@@ -144,12 +203,8 @@ export default {
       this.currentDraw.deleteAll()
     },
     onClickedStory (s) {
-      console.log('clicked story', s)
-      if (this.lastSelected !== s.id) {
-        setTimeout(() => {
-          this.lastSelected = s.id
-        }, 100)
-      }
+      this.lastClickedID = s.id
+      this.setCurrentStory(s)
     },
     onZoomChanged (evt) {
       // save zoom inside store
@@ -215,13 +270,15 @@ export default {
       })
 
       let entity = {
-        title: 'Story 1',
-        description: 'Lorem ipsum dolor sit amet.',
+        title: this.getCreatingStory.title,
+        description: this.getCreatingStory.description,
         date: 1545096864,
         thumbnail: '',
-        author: 'Samantha',
-        city: 'Rio de Janeiro',
-        state: 'Brazil',
+        zoom: this.getLastLocation.zoom,
+        author: this.getCreatingStory.authorName,
+        author_id: this.getCreatingStory.authorID,
+        city: this.getCreatingStory.city,
+        state: this.getCreatingStory.country,
         geometry: {
           coordinates: coordData
         },
@@ -267,7 +324,13 @@ export default {
     ]),
     ...mapActions('story', [
       'save'
-    ])
+    ]),
+    ...mapActions('explore',
+      [
+      'startAnimation',
+      'stopAnimation',
+      'setCurrentStory'
+      ])
   },
   watch: {
     stories () {
@@ -280,15 +343,19 @@ export default {
       if (story === null || !this.mapbox) {
         return
       }
-      console.log('get current story', story)
-      console.log('is animating')
       this.mapbox.flyTo({
-        center: this.getCenterLayer(story),
+        center: [this.getCenterLayer(story)[0], this.getCenterLayer(story)[1] + 5],
         essential: true,
-        zoom: 6
+        zoom: story.zoom ? story.zoom : 4
       })
-      let marker = document.querySelector('#marker_' + story.id)
-      marker.click()
+      setTimeout(() => {
+        let marker = document.querySelector('#marker_' + story.id)
+        console.log(marker)
+        console.log(document.activeElement)
+        if (this.lastClickedID !== story.id) {
+          marker.click()
+        }
+      }, 200)
     }
   }
 }
@@ -317,6 +384,7 @@ export default {
 <style lang='sass' scoped>
 .calculation-box
   z-index: 1000
+  margin-left: 20px
   height: 120px
   width: 150px
   position: absolute
