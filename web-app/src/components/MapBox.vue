@@ -75,7 +75,7 @@
       <p>Use the draw tool on the top left to mark the area of the incident</p>
       <div id="calculated-area"></div>
     </div>
-    <v-btn @click="onClickedCreate" class="createbutton ma-2" color="dark" dark>Create
+    <v-btn v-if="creatingStory" @click="onClickedCreate" class="createbutton ma-2" color="dark" dark>Create
       <v-icon dark right>mdi-checkbox-marked-circle</v-icon>
     </v-btn>
   </div>
@@ -105,7 +105,7 @@ export default {
     creatingStory: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     }
   },
   beforeMount () {
