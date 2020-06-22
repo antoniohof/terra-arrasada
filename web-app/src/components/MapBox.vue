@@ -48,6 +48,7 @@
 
             <v-card-actions>
               <v-btn
+                @click="$router.push('/story/' + story.id)"
                 text
                 dark
                 color="black accent-4"
@@ -106,6 +107,11 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    locked: {
+      type: Boolean,
+      require: false,
+      default: false
     }
   },
   beforeMount () {
@@ -113,7 +119,6 @@ export default {
     this.initialZoom = this.getLastLocation.zoom
   },
   mounted () {
-
   },
   data () {
     return {
@@ -158,6 +163,20 @@ export default {
         this.mapbox.addImage('pattern', img)
       })
       */
+
+      if (this.locked) {
+        console.log('locked map')
+        let story = this.stories[0]
+        console.log(story)
+
+        setTimeout(() => {
+          this.mapbox.jumpTo({
+            center: [this.getCenterLayer(story)[0], this.getCenterLayer(story)[1]],
+            essential: true,
+            zoom: story.zoom ? story.zoom : 4
+          })
+        }, 200)
+      }
 
 
       // add draw controls
@@ -302,7 +321,7 @@ export default {
         'layout': {},
         'paint': {
         //'fill-pattern': 'pattern',
-        'fill-color': '#933922', // pallete 4
+        'fill-color': '#B50717', // pallete 5
         'fill-opacity': 0.5,
         'fill-outline-color': 'black'
         }

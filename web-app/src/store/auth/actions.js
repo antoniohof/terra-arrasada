@@ -1,6 +1,6 @@
 // import Vue from 'vue'
 import firebase from 'firebase'
-
+import router from '@/router.js'
 const actions = {
   async checkAuthentication ({ commit }) {
     await firebase
@@ -50,6 +50,7 @@ const actions = {
     .then(() => {
       console.log('logout success')
       commit('clean_auth')
+      router.push('/')
       return true
     })
   }

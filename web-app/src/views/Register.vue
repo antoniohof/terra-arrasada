@@ -134,7 +134,11 @@ export default {
         this.loading = true
         console.log('register')
         this.register({ email: this.email, password: this.password, name: this.name}).then(() => {
-          this.$router.push('/')
+          if (this.$route.query.creatingEntry) {
+            this.$router.push('/new')
+          } else {
+            this.$router.push('/')
+          }
         }).catch((e) => {
           this.loading = false
           this.$refs.form.reset()

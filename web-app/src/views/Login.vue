@@ -58,7 +58,7 @@
         text
         color="black"
         class="mt-8"
-        @click="$router.push('/register')"
+        @click="$router.push({ path: '/register', query: { creatingEntry: true }})"
 
       >
         Or Register
@@ -74,6 +74,9 @@ export default {
   components: {
   },
   computed: {
+  },
+  mounted () {
+    console.log(this.$route.query.creatingEntry)
   },
   data: () => ({
     valid: true,
@@ -103,7 +106,11 @@ export default {
         this.loading = true
         this.login({ email: this.email, password: this.password}).then(() => {
           this.loading = false
-          this.$router.push('/')
+          if (this.$route.query.creatingEntry) {
+            this.$router.push('/new')
+          } else {
+            this.$router.push('/')
+          }
         }).catch((e) => {
           console.error(e)
           this.$refs.form.reset()

@@ -87,6 +87,7 @@ export default {
   },
   mounted () {
     this.fetchUserPosition()
+    this.fetchStories()
   },
   destroyed () {
     this.stopAnimation()
@@ -101,7 +102,13 @@ export default {
       if (this.isAuthenticated) {
         this.$router.push('/new')
       } else {
-        this.$router.push('/login')
+        this.$router.push(
+          {
+            path: '/login',
+            query: {
+              creatingEntry: true
+          }
+        })
       }
     },
     previousStory () {

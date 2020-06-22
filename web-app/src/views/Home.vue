@@ -60,6 +60,7 @@ export default {
   mounted () {
     this.setupScene()
     this.animateMessage()
+    this.fetchStories()
   },
   destroyed () {
     clearInterval(this.messageAnimation)
@@ -161,6 +162,9 @@ export default {
     },
     ...mapActions('map', [
       'fetchUserPosition'
+    ]),
+    ...mapActions('story', [
+      'fetchStories'
     ])
   }
 }
