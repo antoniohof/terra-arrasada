@@ -74,6 +74,7 @@ export default {
 
 <style lang='sass' scoped>
 .map
+  pointer-events: none !important
   margin-top: 5px
   width: 100% !important
   height: 30% !important
