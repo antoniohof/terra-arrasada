@@ -5,19 +5,6 @@
       dense
       dark
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <!--<v-toolbar-title>Explore</v-toolbar-title>-->
-      <v-btn
-        tile
-        dark
-        color="white"
-        outlined
-        @click="addNew"
-        class="ml-4"
-      >
-      Add new
-      </v-btn>
-      <v-spacer></v-spacer>
       <v-autocomplete
         align-self-center
         v-model="searchedStory"
@@ -33,14 +20,30 @@
         prepend-icon="mdi-database-search"
         return-object
       ></v-autocomplete>
+      <!--<v-toolbar-title>Explore</v-toolbar-title>-->
+      <v-btn
+        tile
+        dark
+        color="white"
+        outlined
+        @click="addNew"
+        class="ml-4"
+      >
+      Add entry
+      </v-btn>
     </v-app-bar>
     <div class="explore_content">
       <div class="controls">
-        <img
-          src="@/assets/icons/arrow.png"
-          class="controls_arrow_right"
-          @click="nextStory"
-        >
+        <div class="controls_arrow_left" @click="nextStory">
+          <img
+            src="@/assets/icons/arrow.png"
+          >
+        </div>
+        <div class="controls_arrow_right" @click="previousStory">
+          <img
+            src="@/assets/icons/arrow.png"
+          >
+        </div>
       </div>
       <MapBox
         :stories="getStories"
@@ -78,7 +81,8 @@ export default {
   },
   data () {
     return {
-      searchedStory: null
+      searchedStory: null,
+      lastIndex: 0
     }
   },
   mounted () {
@@ -100,20 +104,36 @@ export default {
         this.$router.push('/login')
       }
     },
+    previousStory () {
+      if (this.getIsAnimating) {
+        this.stopAnimation()
+      }
+
+      if (this.getCurrentStory === null) {
+        this.setCurrentStory(this.getStories[this.lastIndex])
+      } else {
+        this.lastIndex--
+        if (this.lastIndex <= 0) {
+          this.lastIndex = this.getStories.length - 1
+        }
+        this.setCurrentStory(this.getStories[this.lastIndex])
+        this.searchedStory = this.getStories[this.lastIndex]
+      }
+    },
     nextStory () {
       if (this.getIsAnimating) {
         this.stopAnimation()
       }
 
       if (this.getCurrentStory === null) {
-        this.setCurrentStory(this.getStories[0])
+        this.setCurrentStory(this.getStories[this.lastIndex])
       } else {
-        let index = this.getStories.indexOf(this.getCurrentStory)
-        index++
-        if (index >= this.getStories.length - 1) {
-          index = 0
+        this.lastIndex++
+        if (this.lastIndex > this.getStories.length - 1) {
+          this.lastIndex = 0
         }
-        this.setCurrentStory(this.getStories[index])
+        this.setCurrentStory(this.getStories[this.lastIndex])
+        this.searchedStory = this.getStories[this.lastIndex]
       }
     },
     ...mapActions('story',
@@ -150,17 +170,28 @@ export default {
   top: 50%
   flex-direction: row
   z-index: 1000
-  justify-content: flex-end
+  justify-content: space-between
   pointer-events: none
   &_arrow_right
-    width: 60px
-    height: 60px
     margin-right: 20px
-    color: $pallete-5
-    align-self: flex-end
-    filter: invert(1) drop-shadow(2px 4px 6px black)
-    cursor: pointer
-    pointer-events: all
+    img
+      width: 60px
+      height: 60px
+      color: $pallete-5
+      filter: invert(1) drop-shadow(2px 4px 6px black)
+      cursor: pointer
+      pointer-events: all
+
+  &_arrow_left
+    margin-right: 20px
+    img
+      transform: scaleX(-1)
+      width: 60px
+      height: 60px
+      color: $pallete-5
+      filter: invert(1) drop-shadow(2px 4px 6px black)
+      cursor: pointer
+      pointer-events: all
 
 .explore
   z-index: 0

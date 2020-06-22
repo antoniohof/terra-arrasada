@@ -1,8 +1,9 @@
 <template>
-  <v-col align-self="center" >
-    <v-row class='newstory fill-height fill-width' align="center" justify="center" align-content="center">
+  <v-col class='newstory' align-self="center" >
+    <h2 class='newstory_title'>Add incident</h2>
+    <v-row class='newstory_body fill-height' align="center" justify="center" align-content="center">
       <v-form
-        class='newstory_form mx-4'
+        class='newstory_body_form mx-4'
         ref="form"
         v-model="valid"
         :lazy-validation="lazy"
@@ -168,6 +169,11 @@ export default {
 </script>
 
 <style lang='sass' scoped>
-.newstory_form
-  width: 100%
+.newstory
+  &_title
+    margin-top: 40px
+  &_body
+    &_form
+      width: 100%
+      max-width: 400px
 </style>

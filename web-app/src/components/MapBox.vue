@@ -2,7 +2,8 @@
   <div class="map">
     <MglMap
       :accessToken="accessToken"
-      mapStyle="mapbox://styles/antoniohof/ckbdmlsim237n1jqzu8lrebsx?optimize=true"
+      mapStyle="mapbox://styles/mapbox/satellite-v9?optimize=true"
+
       :center="this.initialCenter"
       :zoom="this.initialZoom"
       @load="onMapLoaded"
@@ -24,8 +25,8 @@
             raised
             tile
             elevation="12"
-            max-width="380"
-            width="330"
+            max-width="250"
+            width="250"
             class="mx-auto p-5"
           >
             <v-list-item>
@@ -74,12 +75,16 @@
       <p>Use the draw tool on the top left to mark the area of the incident</p>
       <div id="calculated-area"></div>
     </div>
+    <v-btn @click="onClickedCreate" class="createbutton ma-2" color="dark" dark>Create
+      <v-icon dark right>mdi-checkbox-marked-circle</v-icon>
+    </v-btn>
   </div>
 </template>
 <script>
 var MapboxDraw = require('@mapbox/mapbox-gl-draw');
 import { mapGetters, mapActions } from 'vuex'
 import { MglMap, MglGeojsonLayer, MglPopup, MglMarker  } from "vue-mapbox";
+// import polygonStyles from '@/assets/js/polygonStyles.js'
 import {
   // PodcastPill
 } from '@/components/atoms'
@@ -100,7 +105,7 @@ export default {
     creatingStory: {
       type: Boolean,
       required: false,
-      default: false
+      default: true
     }
   },
   beforeMount () {
@@ -159,17 +164,19 @@ export default {
       // draw mode
       if (this.creatingStory) {
         this.currentDraw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            polygon: true,
-            trash: true
-        }
-        });
+          displayControlsDefault: false,
+          controls: {
+              polygon: true,
+              trash: true
+          },
+          // styles: polygonStyles,
+          userProperties: true
+        })
         this.mapbox.addControl(this.currentDraw);
 
-        this.mapbox.on('draw.create', this.updateDrawArea);
+        // this.mapbox.on('draw.create', this.updateDrawArea);
         // this.mapbox.on('draw.delete', this.updateDrawArea);
-        // this.mapbox.on('draw.update', this.updateDrawArea);
+        this.mapbox.on('draw.update', this.setPolygonStyle);
       } else {
         // add all the stories to the map
         await this.stories.length > 0
@@ -180,27 +187,17 @@ export default {
 
       this.$emit('loaded')
     },
-    updateDrawArea (e) {
-      let data = this.currentDraw.getAll();
+    setPolygonStyle (what) {
+      console.log(what)
+    },
+    onClickedCreate () {
+      if (this.currentDraw) {
+        console.log(this.currentDraw)
+        let data = this.currentDraw.getAll();
 
-      this.saveNewArea(data)
-
-      let answer = document.getElementById('calculated-area');
-      if (data.features.length > 0) {
-        var area = window.turf.area(data);
-        // restrict to area to 2 decimal points
-        var rounded_area = Math.round(area * 100) / 100;
-        answer.innerHTML =
-            '<p><strong>' +
-            rounded_area +
-            '</strong></p><p>square meters</p>';
-      } else {
-        answer.innerHTML = '';
-        if (e.type !== 'draw.delete')
-            alert('Use the draw tools to draw a polygon!');
+        this.saveNewArea(data)
+        this.currentDraw.deleteAll()
       }
-
-      this.currentDraw.deleteAll()
     },
     onClickedStory (s) {
       this.lastClickedID = s.id
@@ -403,7 +400,7 @@ export default {
 .calculation-box
   z-index: 1000
   margin-left: 20px
-  height: 120px
+  height: 170px
   width: 150px
   position: absolute
   bottom: 100px
@@ -415,4 +412,10 @@ export default {
   p
     margin: 0
     font-size: 13px
+
+.createbutton
+  z-index: 1001
+  position: absolute
+  bottom: 115px
+  left: 42px
 </style>
