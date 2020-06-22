@@ -58,9 +58,10 @@ export default {
     }
   },
   mounted () {
-    this.setupScene()
-    this.animateMessage()
-    this.fetchStories()
+    this.fetchStories().then(() => {
+      this.setupScene()
+      this.animateMessage()
+    })
   },
   destroyed () {
     clearInterval(this.messageAnimation)
@@ -82,7 +83,6 @@ export default {
     },
     async setupScene () {
       await window.THREE
-      await this.getStories
 
       let pathData = []
 
