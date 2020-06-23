@@ -1,7 +1,7 @@
 <template>
-  <v-col class='newstory' align-self="center" >
-    <h2 class='newstory_title'>Add incident</h2>
-    <v-row class='newstory_body fill-height' align="center" justify="center" align-content="center">
+  <v-col class='newstory overflow-y-auto' align-content="center">
+    <h2 class='newstory_title mb-8'>Report incident / crime</h2>
+    <v-row class='newstory_body' align="center" justify="center" align-content="center">
       <v-form
         class='newstory_body_form mx-4'
         ref="form"
@@ -33,7 +33,8 @@
           label="Description"
           auto-grow
           full-width
-          value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+          value=""
+          :rules="descriptionRules"
         ></v-textarea>
 
 
@@ -59,6 +60,14 @@
           label="Type"
           required
         ></v-select>
+
+        <v-text-field
+          v-if="crimeType === 'Other'"
+          v-model="specificCrimeType"
+          :rules="[v => !!v || 'Specify type is required']"
+          label="Please specify"
+          required
+        ></v-text-field>
 
         <v-btn
           :loading="loading"
@@ -86,9 +95,21 @@ export default {
   name: 'newstory',
   components: {
   },
+  mounted () {
+    if (this.getCreatingStory) {
+      this.title = this.getCreatingStory.title
+      this.description = this.getCreatingStory.description
+      this.crimeType = this.getCreatingStory.type
+      this.city = this.getCreatingStory.city
+      this.country = this.getCreatingStory.country
+    }
+  },
   computed: {
     ...mapGetters('auth', [
       'getUser'
+    ]),
+    ...mapGetters('story', [
+      'getCreatingStory'
     ])
   },
   data: () => ({
@@ -111,14 +132,27 @@ export default {
     ],
     crimeType: '',
     types: [
-      'Oil Spill',
-      'Deforestation',
+      'Illegal logging',
+      'Envinronmental Killings',
+      'Poaching/Hunting',
+      'Abandoned vehicle',
+      'Bushmeat',
+      'Wildlife smuggling',
+      'Illegal construction',
+      'Illegal dumping',
+      'Illegal mining',
+      'Illegal fishing',
       'Littering',
-      'Other'
+      'Dumping',
+      'Irregular toxic waste disposal',
+      'Irregular e-waste disposal',
+      'Oil spill',
+      'Water pollution'
     ],
     lazy: false,
     loading: false,
-    error: ''
+    error: '',
+    specificCrimeType: ''
   }),
 
   methods: {
@@ -133,6 +167,7 @@ export default {
         title: this.title,
         description: this.description,
         date: 1545096864,
+        type: this.crimeType === 'Other' ? this.crimeType : this.specificCrimeType,
         thumbnail: '',
         zoom: 0,
         authorName: this.getUser.displayName,
@@ -143,20 +178,11 @@ export default {
           coordinates: []
         },
         photos: [
-          {
-            url: ''
-          },
-          {
-            url: ''
-          },
-          {
-            url: ''
-          }
         ]
       }
 
       this.storeCreatingStory(entity)
-      this.$router.push('/new2')
+      this.$router.push('/create/2')
     },
     reset () {
       this.$refs.form.reset()
@@ -170,6 +196,8 @@ export default {
 
 <style lang='sass' scoped>
 .newstory
+  max-height: 80vh
+
   &_title
     margin-top: 40px
   &_body

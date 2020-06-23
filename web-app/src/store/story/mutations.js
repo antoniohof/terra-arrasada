@@ -10,6 +10,9 @@ const mutations = {
   },
   store_creating_story: (state, value) => {
     state.story.creating = value
+  },
+  clear_creating_story: (state) => {
+    state.story.creating = null
   }
 }
 

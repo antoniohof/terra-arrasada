@@ -38,11 +38,11 @@
             </v-list-item>
 
             <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+              :src="story.thumbnail.url"
               height="194"
             ></v-img>
 
-            <v-card-text>
+            <v-card-text max-height="200">
               {{ story.description }}
             </v-card-text>
 
@@ -76,7 +76,7 @@
       <p>Use the draw tool on the top left to mark the area of the incident</p>
       <div id="calculated-area"></div>
     </div>
-    <v-btn v-if="creatingStory" @click="onClickedCreate" class="createbutton ma-2" color="dark" dark>Create
+    <v-btn v-if="creatingStory" @click="onClickedCreate" class="createbutton ma-2" color="black" dark>Create
       <v-icon dark right>mdi-checkbox-marked-circle</v-icon>
     </v-btn>
   </div>
@@ -129,7 +129,8 @@ export default {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       currentDraw: null,
       storiesAdded: [],
-      lastClickedID: null
+      lastClickedID: null,
+      readyToCreate: false
     }
   },
   computed: {
@@ -193,7 +194,7 @@ export default {
         })
         this.mapbox.addControl(this.currentDraw);
 
-        // this.mapbox.on('draw.create', this.updateDrawArea);
+        this.mapbox.on('draw.create', () => { this.readyToCreate = true });
         // this.mapbox.on('draw.delete', this.updateDrawArea);
         this.mapbox.on('draw.update', this.setPolygonStyle);
       } else {
@@ -210,6 +211,10 @@ export default {
       console.log(what)
     },
     onClickedCreate () {
+      if (!this.readyToCreate) {
+        console.log('not ready, please mark area')
+        return
+      }
       if (this.currentDraw) {
         console.log(this.currentDraw)
         let data = this.currentDraw.getAll();
@@ -284,33 +289,14 @@ export default {
           lat: coord[1]
         })
       })
-
       let entity = {
-        title: this.getCreatingStory.title,
-        description: this.getCreatingStory.description,
-        date: 1545096864,
-        thumbnail: '',
-        zoom: this.getLastLocation.zoom,
-        author: this.getCreatingStory.authorName,
-        author_id: this.getCreatingStory.authorID,
-        city: this.getCreatingStory.city,
-        state: this.getCreatingStory.country,
         geometry: {
           coordinates: coordData
-        },
-        photos: [
-          {
-            url: ''
-          },
-          {
-            url: ''
-          },
-          {
-            url: ''
-          }
-        ]
+        }
       }
-      this.save(entity)
+      this.storeCreatingStory(entity)
+
+      this.save(this.getCreatingStory)
       this.$router.push('/explore')
     },
     layerInfo (id) {
@@ -340,7 +326,8 @@ export default {
       'setLastLocation'
     ]),
     ...mapActions('story', [
-      'save'
+      'save',
+      'storeCreatingStory'
     ]),
     ...mapActions('explore',
       [

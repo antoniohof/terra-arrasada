@@ -6,6 +6,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import NewStory from './views/NewStory.vue'
 import NewStoryPick from './views/NewStoryPick.vue'
+import NewStoryFiles from './views/NewStoryFiles.vue'
 import Story from './views/Story.vue'
 
 import store from './store/index'
@@ -60,8 +61,8 @@ const router = new Router({
       }
     },
     {
-      path: '/new',
-      name: 'new',
+      path: '/create/1',
+      name: 'create',
       component: NewStory,
       meta: {
         auth: false,
@@ -71,8 +72,19 @@ const router = new Router({
       }
     },
     {
-      path: '/new2',
-      name: 'new2',
+      path: '/create/2',
+      name: 'create2',
+      component: NewStoryFiles,
+      meta: {
+        auth: false,
+        top: {
+          show: true
+        }
+      }
+    },
+    {
+      path: '/create/3',
+      name: 'create3',
       component: NewStoryPick,
       meta: {
         auth: false,

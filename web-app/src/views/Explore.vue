@@ -100,7 +100,7 @@ export default {
     },
     addNew () {
       if (this.isAuthenticated) {
-        this.$router.push('/new')
+        this.$router.push('/create/1')
       } else {
         this.$router.push(
           {

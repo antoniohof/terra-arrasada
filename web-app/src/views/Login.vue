@@ -107,7 +107,7 @@ export default {
         this.login({ email: this.email, password: this.password}).then(() => {
           this.loading = false
           if (this.$route.query.creatingEntry) {
-            this.$router.push('/new')
+            this.$router.push('/create/1')
           } else {
             this.$router.push('/')
           }

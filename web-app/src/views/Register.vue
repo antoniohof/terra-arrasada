@@ -135,7 +135,7 @@ export default {
         console.log('register')
         this.register({ email: this.email, password: this.password, name: this.name}).then(() => {
           if (this.$route.query.creatingEntry) {
-            this.$router.push('/new')
+            this.$router.push('/create/1')
           } else {
             this.$router.push('/')
           }

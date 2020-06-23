@@ -5,6 +5,7 @@ import map from './map'
 import story from './story'
 import explore from './explore'
 import auth from './auth'
+import storage from './storage'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     map,
     story,
     explore,
-    auth
+    auth,
+    storage
   }
 })
