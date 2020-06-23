@@ -105,7 +105,8 @@ export default {
           console.log(file)
           let dataToSave = {
             name: file.name,
-            url: downloadUrl
+            url: url,
+            downloadUrl: downloadUrl
           }
           this.files.push(dataToSave)
           this.finished = true

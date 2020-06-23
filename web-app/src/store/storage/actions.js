@@ -2,7 +2,7 @@
 import firebase from 'firebase'
 
 const actions = {
-  uploadFile: ({ commit },data) => {
+  uploadFile: ({ commit }, data) => {
     return new Promise((resolve, reject) => {
       // var storageRef = firebase.storage().ref();
       // Create a root reference
@@ -25,6 +25,18 @@ const actions = {
           console.log('File available at', downloadURL);
           resolve(downloadURL)
         })
+
+      })
+    })
+  },
+  fetchDownloadPath: ({ state }, url)=> {
+    return new Promise((resolve) => {
+      console.log(state)
+      console.log(url)
+      var storageRef = firebase.storage().ref();
+      var fileRef = storageRef.child(url);
+      fileRef.getDownloadURL().then(function(downloadURL) {
+        resolve(downloadURL)
       })
     })
   }

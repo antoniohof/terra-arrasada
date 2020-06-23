@@ -38,7 +38,8 @@
             </v-list-item>
 
             <v-img
-              :src="story.thumbnail.url"
+              once
+              :src="story.thumbnail.downloadUrl"
               height="194"
             ></v-img>
 
@@ -329,11 +330,13 @@ export default {
       'save',
       'storeCreatingStory'
     ]),
-    ...mapActions('explore',
-      [
+    ...mapActions('explore', [
       'startAnimation',
       'stopAnimation',
       'setCurrentStory'
+      ]),
+      ...mapActions('storage', [
+        'fetchDownloadPath'
       ])
   },
   watch: {
