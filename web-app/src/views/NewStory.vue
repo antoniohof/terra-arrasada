@@ -177,7 +177,7 @@ export default {
         geometry: {
           coordinates: []
         },
-        photos: [
+        images: [
         ]
       }
 
