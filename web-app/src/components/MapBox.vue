@@ -18,6 +18,7 @@
       >
         <div :id="'marker_' + story.id" slot="marker" class="marker" />
         <MglPopup
+          :keepInView="true"
           v-if="getCurrentStory && getCurrentStory.id === story.id"
         >
           <!--<PodcastPill :story="story"></PodcastPill>-->
@@ -25,14 +26,14 @@
             raised
             tile
             elevation="12"
-            max-width="250"
-            width="250"
-            class="mx-auto p-5"
+            max-width="300"
+            width="300"
+            class="mx-auto p-5 storycard"
           >
             <v-list-item>
               <!-- <v-list-item-avatar color="grey"></v-list-item-avatar> -->
-              <v-list-item-content>
-                <v-list-item-title class="headline">{{ story.title }}</v-list-item-title>
+              <v-list-item-content class='storycard_body'>
+                <v-list-item-title class="storycard_title text-wrap">{{ story.title }}</v-list-item-title>
                 <v-list-item-subtitle>{{ story.author }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -43,7 +44,7 @@
               height="194"
             ></v-img>
 
-            <v-card-text max-height="200">
+            <v-card-text class='storycard_description' max-height="200">
               {{ story.description }}
             </v-card-text>
 
@@ -350,11 +351,17 @@ export default {
       if (story === null || !this.mapbox) {
         return
       }
+
+      var px = this.mapbox.project(this.getCenterLayer(story)); // find the pixel location on the map where the popup anchor is
+      px.y -= window.innerHeight/3 // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+      this.mapbox.panTo(this.mapbox.unproject(px),{animate: true}); // pan to new center
+      /*
       this.mapbox.flyTo({
-        center: [this.getCenterLayer(story)[0], this.getCenterLayer(story)[1] - (10 - story.zoom)/6],
+        center: [this.getCenterLayer(story)[0], y],
         essential: true,
         zoom: story.zoom ? story.zoom : 4
       })
+      */
       setTimeout(() => {
         let marker = document.querySelector('#marker_' + story.id)
         console.log(marker)
@@ -373,7 +380,7 @@ export default {
   width: 0
   padding-top: 5px
   height: 100px !important
-  border: 1px solid black !important
+  border: 1px solid red !important
   z-index: 1
 
 .mapboxgl-popup-content
@@ -388,7 +395,7 @@ export default {
 .marker
   height: 15px !important
   width: 15px
-  background-color: black
+  background-color: red
   border-radius: 50%
   display: inline-block
   cursor: pointer
@@ -402,6 +409,17 @@ export default {
 .slide-fade-enter, .slide-fade-leave-to
   transform: translateX(100px) !important
   opacity: 0 !important
+
+.storycard_body
+.storycard_title
+  font-size: 16px !important
+  text-align: left
+  margin-left: 10px !important
+  margin-top: 5px !important
+
+.storycard_description
+  padding: 10px !important
+  text-align: left
 </style>
 
 

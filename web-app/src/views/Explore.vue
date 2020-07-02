@@ -120,7 +120,7 @@ export default {
         this.setCurrentStory(this.getStories[this.lastIndex])
       } else {
         this.lastIndex--
-        if (this.lastIndex <= 0) {
+        if (this.lastIndex < 0) {
           this.lastIndex = this.getStories.length - 1
         }
         this.setCurrentStory(this.getStories[this.lastIndex])
