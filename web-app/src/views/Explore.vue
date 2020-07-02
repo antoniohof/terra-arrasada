@@ -82,7 +82,8 @@ export default {
   data () {
     return {
       searchedStory: null,
-      lastIndex: 0
+      lastIndex: 0,
+      nextTimeout: false
     }
   },
   mounted () {
@@ -112,6 +113,15 @@ export default {
       }
     },
     previousStory () {
+      if (this.nextTimeout) {
+        return
+      }
+
+      this.nextTimeout = true
+
+      setTimeout(() => {
+        this.nextTimeout = false
+      }, 300)
       if (this.getIsAnimating) {
         this.stopAnimation()
       }
@@ -128,6 +138,15 @@ export default {
       }
     },
     nextStory () {
+      if (this.nextTimeout) {
+        return
+      }
+
+      this.nextTimeout = true
+
+      setTimeout(() => {
+        this.nextTimeout = false
+      }, 300)
       if (this.getIsAnimating) {
         this.stopAnimation()
       }
