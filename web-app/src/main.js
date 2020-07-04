@@ -5,6 +5,8 @@ import store from './store/index'
 import './registerServiceWorker'
 import firebase from 'firebase'
 import vuetify from './plugins/vuetify';
+import Clipboard from 'v-clipboard'
+
 Vue.config.productionTip = false
 
 new Vue({
@@ -13,6 +15,8 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+
+Vue.use(Clipboard)
 
 
 // Your web app's Firebase configuration

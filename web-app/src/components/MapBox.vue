@@ -2,7 +2,7 @@
   <div class="map">
     <MglMap
       :accessToken="accessToken"
-      mapStyle="mapbox://styles/mapbox/satellite-v9?optimize=true"
+      mapStyle="mapbox://styles/antoniohof/ckc7p8lpj0tlh1ileaec3bel4?optimize=true"
 
       :center="this.initialCenter"
       :zoom="this.initialZoom"
@@ -58,8 +58,8 @@
                 Read More
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
+              <v-btn icon v-clipboard="getLink(story)">
+                <v-icon>mdi-link-variant</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -148,6 +148,9 @@ export default {
     ])
   },
   methods: {
+    getLink (s) {
+      return window.location.origin + '/story/' + s.id
+    },
     async onMapLoaded(evt) {
       this.mapbox = evt.map
       // Here we cathing 'load' map event

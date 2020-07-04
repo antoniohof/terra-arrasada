@@ -29,7 +29,7 @@
         @click="addNew"
         class="ml-4"
       >
-      Add entry
+      Report incident
       </v-btn>
     </v-app-bar>
     <div class="explore_content">
